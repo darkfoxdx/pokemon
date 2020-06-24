@@ -31,12 +31,16 @@ class _HomeScreenState extends State<HomeScreen> {
                     crossAxisCount: 3),
                 children: snapshot.data
                     .map(
-                      (e) => CachedNetworkImage(
-                        imageUrl: e.imageUrl,
-                        placeholder: (context, url) => Padding(
-                            padding: EdgeInsets.all(50),
-                            child: CircularProgressIndicator()),
-                        errorWidget: (context, url, error) => Icon(Icons.error),
+                      (e) => Card(
+                        key: ValueKey(e.name),
+                        child: CachedNetworkImage(
+                          imageUrl: e.imageUrl,
+                          fit: BoxFit.cover,
+                          placeholder: (context, url) => Padding(
+                              padding: EdgeInsets.all(50),
+                              child: CircularProgressIndicator()),
+                          errorWidget: (context, url, error) => Icon(Icons.error),
+                        ),
                       ),
                     )
                     .toList(),
