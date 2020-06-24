@@ -17,31 +17,32 @@ class _HomeScreenState extends State<HomeScreen> {
         appBar: AppBar(
           title: Text("Pokemon"),
         ),
-        body: Scrollbar(
-          child: FutureBuilder(
-            initialData: null,
-            future: Api.getPokemonDetails(),
-            builder:
-                (BuildContext context, AsyncSnapshot<List<Pokemon>> snapshot) {
-              if (snapshot == null || snapshot.data == null) {
-                return SizedBox.shrink();
-              }
-              return GridView(
+        body: FutureBuilder(
+          initialData: null,
+          future: Api.getPokemonDetails(),
+          builder:
+              (BuildContext context, AsyncSnapshot<List<Pokemon>> snapshot) {
+            if (snapshot == null || snapshot.data == null) {
+              return Center(child: CircularProgressIndicator(),);
+            }
+            return Scrollbar(
+              child: GridView(
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 3),
                 children: snapshot.data
                     .map(
                       (e) => CachedNetworkImage(
                         imageUrl: e.imageUrl,
-                        placeholder: (context, url) =>
-                            CircularProgressIndicator(),
+                        placeholder: (context, url) => Padding(
+                            padding: EdgeInsets.all(50),
+                            child: CircularProgressIndicator()),
                         errorWidget: (context, url, error) => Icon(Icons.error),
                       ),
                     )
                     .toList(),
-              );
-            },
-          ),
+              ),
+            );
+          },
         ));
   }
 }
