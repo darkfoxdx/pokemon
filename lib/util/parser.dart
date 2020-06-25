@@ -1,7 +1,13 @@
+import 'package:flutter/material.dart';
 import 'package:pokemon/api/api_const.dart';
 import 'package:pokemon/model/pokemon.dart';
 
 class Parser {
+  static T getEnumFromString<T>(Iterable<T> values, String value) {
+    return values.firstWhere((type) => type.toString().split(".").last == value,
+        orElse: () => null);
+  }
+
   //{{rdex|011|825|Dottler|2|Bug|Psychic}}
   static RegExp pokemonPattern = RegExp(
       r'\{\{rdex\|(\d+)\|(\d+)\|(\w+)\|(\d)\|(\w+)\|?(\w*)\}\}');

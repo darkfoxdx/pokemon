@@ -23,7 +23,9 @@ class _HomeScreenState extends State<HomeScreen> {
           builder:
               (BuildContext context, AsyncSnapshot<List<Pokemon>> snapshot) {
             if (snapshot == null || snapshot.data == null) {
-              return Center(child: CircularProgressIndicator(),);
+              return Center(
+                child: CircularProgressIndicator(),
+              );
             }
             return Scrollbar(
               child: GridView(
@@ -31,7 +33,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     crossAxisCount: 3),
                 children: snapshot.data
                     .map(
-                      (e) => Card(
+                      (e) => Container(
+                        decoration: BoxDecoration(
+                          gradient: e.generateGradient(),
+                        ),
                         key: ValueKey(e.name),
                         child: CachedNetworkImage(
                           imageUrl: e.imageUrl,
@@ -39,7 +44,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           placeholder: (context, url) => Padding(
                               padding: EdgeInsets.all(50),
                               child: CircularProgressIndicator()),
-                          errorWidget: (context, url, error) => Icon(Icons.error),
+                          errorWidget: (context, url, error) =>
+                              Icon(Icons.error),
                         ),
                       ),
                     )

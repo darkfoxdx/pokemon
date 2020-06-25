@@ -16,9 +16,9 @@ class _$Pokemon extends Pokemon {
   @override
   final int noOfTypes;
   @override
-  final String type1;
+  final PokemonType type1;
   @override
-  final String type2;
+  final PokemonType type2;
   @override
   final String imageUrl;
 
@@ -118,13 +118,13 @@ class PokemonBuilder implements Builder<Pokemon, PokemonBuilder> {
   int get noOfTypes => _$this._noOfTypes;
   set noOfTypes(int noOfTypes) => _$this._noOfTypes = noOfTypes;
 
-  String _type1;
-  String get type1 => _$this._type1;
-  set type1(String type1) => _$this._type1 = type1;
+  PokemonType _type1;
+  PokemonType get type1 => _$this._type1;
+  set type1(PokemonType type1) => _$this._type1 = type1;
 
-  String _type2;
-  String get type2 => _$this._type2;
-  set type2(String type2) => _$this._type2 = type2;
+  PokemonType _type2;
+  PokemonType get type2 => _$this._type2;
+  set type2(PokemonType type2) => _$this._type2 = type2;
 
   String _imageUrl;
   String get imageUrl => _$this._imageUrl;
