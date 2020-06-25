@@ -4,6 +4,8 @@ import 'package:http/http.dart';
 import 'package:pokemon/api/api.dart';
 import 'package:pokemon/api/api_const.dart';
 import 'package:pokemon/model/pokemon.dart';
+import 'package:pokemon/repository/pokemon_list_repo.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -12,17 +14,20 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    Provider.of<PokemonListRepo>(context).getPokemons();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           title: Text("Pokemon"),
         ),
-        body: FutureBuilder(
-          initialData: null,
-          future: Api.getPokemonDetails(),
-          builder:
-              (BuildContext context, AsyncSnapshot<List<Pokemon>> snapshot) {
-            if (snapshot == null || snapshot.data == null) {
+        body: Consumer<PokemonListRepo>(
+          builder: (BuildContext context, PokemonListRepo repo, Widget child) {
+            if (repo.pokemons.isEmpty) {
               return Center(
                 child: CircularProgressIndicator(),
               );
@@ -31,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: GridView(
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 3),
-                children: snapshot.data
+                children: repo.pokemons
                     .map(
                       (e) => Padding(
                         padding: const EdgeInsets.all(5.0),
