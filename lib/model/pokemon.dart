@@ -42,7 +42,7 @@ abstract class Pokemon implements Built<Pokemon, PokemonBuilder>, Comparable {
   LinearGradient generateGradient() {
     return LinearGradient(
       colors: [type1.color, (type2 ?? type1).color],
-      stops: [0.0, 0.5, 0.5, 1.0],
+      stops: [0.5, 0.5],
       begin: Alignment.bottomRight,
       end: Alignment.topLeft,
     );

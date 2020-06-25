@@ -18,34 +18,39 @@ class Api {
       http.get(ApiConst.baseUrl + convertToQuery(ApiConst.getPokemonsQuery()));
 
   static Future<List<Pokemon>> getPokemonDetails() async {
-    var client = http.Client();
-    var getPokemon = await client
-        .get(ApiConst.baseUrl + convertToQuery(ApiConst.getPokemonsQuery()));
-    print("getPokemon = ${getPokemon.request.url.toString()}");
-    var result = getPokemon?.body;
+    try {
+      var client = http.Client();
+      var getPokemon = await client
+          .get(ApiConst.baseUrl + convertToQuery(ApiConst.getPokemonsQuery()));
+      print("getPokemon = ${getPokemon.request.url.toString()}");
+      var result = getPokemon?.body;
 
-    var pokemons = Parser.textToPokemonList(result);
-    var pokemonsString = pokemons.map((e) => e.name).toList();
-    var pokemonsStrings = Parser.splitPokemonStringListBy(pokemonsString, 50);
+      var pokemons = Parser.textToPokemonList(result);
+      var pokemonsString = pokemons.map((e) => e.name).toList();
+      var pokemonsStrings = Parser.splitPokemonStringListBy(pokemonsString, 50);
 
-    List<Pokemon> mergedList = [];
-    for (List<String> pokemonString in pokemonsStrings) {
-      var getPokemonDetail = await client.get(ApiConst.baseUrl +
-          convertToQuery(ApiConst.getPokemonDetailsQuery(pokemonString)));
-      print("getPokemonDetail = ${getPokemonDetail.request.url.toString()}");
-      final json = jsonDecode(getPokemonDetail.body);
-      PokemonDetailResponse pokemonDetailResponse =
-      serializers.deserializeWith(PokemonDetailResponse.serializer, json);
+      List<Pokemon> mergedList = [];
+      for (List<String> pokemonString in pokemonsStrings) {
+        var getPokemonDetail = await client.get(ApiConst.baseUrl +
+            convertToQuery(ApiConst.getPokemonDetailsQuery(pokemonString)));
+        print("getPokemonDetail = ${getPokemonDetail.request.url.toString()}");
+        final json = jsonDecode(getPokemonDetail.body);
+        PokemonDetailResponse pokemonDetailResponse =
+        serializers.deserializeWith(PokemonDetailResponse.serializer, json);
 
-      pokemonDetailResponse.query.pages.values.forEach((detail) {
-        var updated = pokemons.firstWhere((pokemon) =>
-            detail.title.toLowerCase().contains(pokemon.name.toLowerCase()))
-            .rebuild((b) => b..imageUrl = detail.original.source);
-        mergedList.add(updated);
-      });
+        pokemonDetailResponse.query.pages.values.forEach((detail) {
+          var updated = pokemons.firstWhere((pokemon) =>
+              detail.title.toLowerCase().contains(pokemon.name.toLowerCase()))
+              .rebuild((b) => b..imageUrl = detail.original.source);
+          mergedList.add(updated);
+        });
+      }
+      return mergedList..sort();
+    } catch (error, stack) {
+      print("$error\n$stack");
     }
 
+    return null;
 
-    return mergedList..sort();
   }
 }

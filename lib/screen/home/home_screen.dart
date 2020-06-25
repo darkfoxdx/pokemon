@@ -33,19 +33,24 @@ class _HomeScreenState extends State<HomeScreen> {
                     crossAxisCount: 3),
                 children: snapshot.data
                     .map(
-                      (e) => Container(
-                        decoration: BoxDecoration(
-                          gradient: e.generateGradient(),
-                        ),
-                        key: ValueKey(e.name),
-                        child: CachedNetworkImage(
-                          imageUrl: e.imageUrl,
-                          fit: BoxFit.cover,
-                          placeholder: (context, url) => Padding(
-                              padding: EdgeInsets.all(50),
-                              child: CircularProgressIndicator()),
-                          errorWidget: (context, url, error) =>
-                              Icon(Icons.error),
+                      (e) => Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Container(
+                          padding: EdgeInsets.all(5.0),
+                          decoration: BoxDecoration(
+                            gradient: e.generateGradient(),
+                            borderRadius: BorderRadius.circular(5.0),
+                          ),
+                          key: ValueKey(e.name),
+                          child: CachedNetworkImage(
+                            imageUrl: e.imageUrl,
+                            fit: BoxFit.cover,
+                            placeholder: (context, url) => Padding(
+                                padding: EdgeInsets.all(50),
+                                child: CircularProgressIndicator()),
+                            errorWidget: (context, url, error) =>
+                                Icon(Icons.error),
+                          ),
                         ),
                       ),
                     )
