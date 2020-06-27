@@ -39,10 +39,16 @@ class _$PokemonSerializer implements StructuredSerializer<Pokemon> {
         ..add(serializers.serialize(object.type2,
             specifiedType: const FullType(PokemonType)));
     }
-    if (object.imageUrl != null) {
+    if (object.originalUrl != null) {
       result
-        ..add('imageUrl')
-        ..add(serializers.serialize(object.imageUrl,
+        ..add('originalUrl')
+        ..add(serializers.serialize(object.originalUrl,
+            specifiedType: const FullType(String)));
+    }
+    if (object.thumbnailUrl != null) {
+      result
+        ..add('thumbnailUrl')
+        ..add(serializers.serialize(object.thumbnailUrl,
             specifiedType: const FullType(String)));
     }
     return result;
@@ -83,8 +89,12 @@ class _$PokemonSerializer implements StructuredSerializer<Pokemon> {
           result.type2 = serializers.deserialize(value,
               specifiedType: const FullType(PokemonType)) as PokemonType;
           break;
-        case 'imageUrl':
-          result.imageUrl = serializers.deserialize(value,
+        case 'originalUrl':
+          result.originalUrl = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'thumbnailUrl':
+          result.thumbnailUrl = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
       }
@@ -108,7 +118,9 @@ class _$Pokemon extends Pokemon {
   @override
   final PokemonType type2;
   @override
-  final String imageUrl;
+  final String originalUrl;
+  @override
+  final String thumbnailUrl;
 
   factory _$Pokemon([void Function(PokemonBuilder) updates]) =>
       (new PokemonBuilder()..update(updates)).build();
@@ -120,7 +132,8 @@ class _$Pokemon extends Pokemon {
       this.noOfTypes,
       this.type1,
       this.type2,
-      this.imageUrl})
+      this.originalUrl,
+      this.thumbnailUrl})
       : super._() {
     if (regionalDex == null) {
       throw new BuiltValueNullFieldError('Pokemon', 'regionalDex');
@@ -156,7 +169,8 @@ class _$Pokemon extends Pokemon {
         noOfTypes == other.noOfTypes &&
         type1 == other.type1 &&
         type2 == other.type2 &&
-        imageUrl == other.imageUrl;
+        originalUrl == other.originalUrl &&
+        thumbnailUrl == other.thumbnailUrl;
   }
 
   @override
@@ -165,12 +179,16 @@ class _$Pokemon extends Pokemon {
         $jc(
             $jc(
                 $jc(
-                    $jc($jc($jc(0, regionalDex.hashCode), nationalDex.hashCode),
-                        name.hashCode),
-                    noOfTypes.hashCode),
-                type1.hashCode),
-            type2.hashCode),
-        imageUrl.hashCode));
+                    $jc(
+                        $jc(
+                            $jc($jc(0, regionalDex.hashCode),
+                                nationalDex.hashCode),
+                            name.hashCode),
+                        noOfTypes.hashCode),
+                    type1.hashCode),
+                type2.hashCode),
+            originalUrl.hashCode),
+        thumbnailUrl.hashCode));
   }
 
   @override
@@ -182,7 +200,8 @@ class _$Pokemon extends Pokemon {
           ..add('noOfTypes', noOfTypes)
           ..add('type1', type1)
           ..add('type2', type2)
-          ..add('imageUrl', imageUrl))
+          ..add('originalUrl', originalUrl)
+          ..add('thumbnailUrl', thumbnailUrl))
         .toString();
   }
 }
@@ -214,9 +233,13 @@ class PokemonBuilder implements Builder<Pokemon, PokemonBuilder> {
   PokemonType get type2 => _$this._type2;
   set type2(PokemonType type2) => _$this._type2 = type2;
 
-  String _imageUrl;
-  String get imageUrl => _$this._imageUrl;
-  set imageUrl(String imageUrl) => _$this._imageUrl = imageUrl;
+  String _originalUrl;
+  String get originalUrl => _$this._originalUrl;
+  set originalUrl(String originalUrl) => _$this._originalUrl = originalUrl;
+
+  String _thumbnailUrl;
+  String get thumbnailUrl => _$this._thumbnailUrl;
+  set thumbnailUrl(String thumbnailUrl) => _$this._thumbnailUrl = thumbnailUrl;
 
   PokemonBuilder();
 
@@ -228,7 +251,8 @@ class PokemonBuilder implements Builder<Pokemon, PokemonBuilder> {
       _noOfTypes = _$v.noOfTypes;
       _type1 = _$v.type1;
       _type2 = _$v.type2;
-      _imageUrl = _$v.imageUrl;
+      _originalUrl = _$v.originalUrl;
+      _thumbnailUrl = _$v.thumbnailUrl;
       _$v = null;
     }
     return this;
@@ -257,7 +281,8 @@ class PokemonBuilder implements Builder<Pokemon, PokemonBuilder> {
             noOfTypes: noOfTypes,
             type1: type1,
             type2: type2,
-            imageUrl: imageUrl);
+            originalUrl: originalUrl,
+            thumbnailUrl: thumbnailUrl);
     replace(_$result);
     return _$result;
   }

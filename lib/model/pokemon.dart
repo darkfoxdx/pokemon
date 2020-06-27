@@ -11,8 +11,7 @@ abstract class Pokemon implements Built<Pokemon, PokemonBuilder>, Comparable {
 
   factory Pokemon([void Function(PokemonBuilder) updates]) = _$Pokemon;
 
-  static Serializer<Pokemon> get serializer =>
-      _$pokemonSerializer;
+  static Serializer<Pokemon> get serializer => _$pokemonSerializer;
 
   String get regionalDex;
 
@@ -27,12 +26,13 @@ abstract class Pokemon implements Built<Pokemon, PokemonBuilder>, Comparable {
   @nullable
   PokemonType get type2;
 
-  @nullable
-  String get imageUrl;
+  String get originalUrl;
 
-  String thumbnail([int size = 200]) {
+  String get thumbnailUrl;
+
+  String thumbnail([int size = 120]) {
     // So far only know 50, 100, 150, 160, 200, 240
-    return imageUrl.replaceAll(RegExp(r'\d+px'), '${size}px');
+    return thumbnailUrl.replaceAll(RegExp(r'\d+px'), '${size}px');
   }
 
   factory Pokemon.fromMatch(RegExpMatch match) {

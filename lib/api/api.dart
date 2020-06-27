@@ -14,14 +14,14 @@ class Api {
         map.entries.map((entry) => "${entry.key}=${entry.value}").join("&");
   }
 
-  static Future<http.Response> getPokemon() async =>
-      http.get(ApiConst.baseUrl + convertToQuery(ApiConst.getGalarOriPokemonsQuery()));
+  static Future<http.Response> getPokemon() async => http.get(
+      ApiConst.baseUrl + convertToQuery(ApiConst.getGalarOriPokemonsQuery()));
 
   static Future<BuiltList<Pokemon>> getPokemonDetails() async {
     try {
       var client = http.Client();
-      var getPokemon = await client
-          .get(ApiConst.baseUrl + convertToQuery(ApiConst.getGalarOriPokemonsQuery()));
+      var getPokemon = await client.get(ApiConst.baseUrl +
+          convertToQuery(ApiConst.getGalarOriPokemonsQuery()));
       print("getPokemon = ${getPokemon.request.url.toString()}");
       var result = getPokemon?.body;
 
@@ -36,12 +36,16 @@ class Api {
         print("getPokemonDetail = ${getPokemonDetail.request.url.toString()}");
         final json = jsonDecode(getPokemonDetail.body);
         PokemonDetailResponse pokemonDetailResponse =
-        serializers.deserializeWith(PokemonDetailResponse.serializer, json);
+            serializers.deserializeWith(PokemonDetailResponse.serializer, json);
 
         pokemonDetailResponse.query.pages.values.forEach((detail) {
-          var updated = pokemons.firstWhere((pokemon) =>
-              detail.title.toLowerCase().contains(pokemon.name.toLowerCase()))
-              .rebuild((b) => b..imageUrl = detail.thumbnail.source);
+          var updated = pokemons
+              .firstWhere((pokemon) => detail.title
+                  .toLowerCase()
+                  .contains(pokemon.name.toLowerCase()))
+              .rebuild((b) => b
+                ..thumbnailUrl = detail.thumbnail.source
+                ..originalUrl = detail.original.source);
           mergedList.add(updated);
         });
       }
@@ -51,6 +55,5 @@ class Api {
     }
 
     return null;
-
   }
 }

@@ -16,7 +16,7 @@ class ApiConst {
         "prop": "pageimages|revisions",
         "titles": "${pokemons.join("|")}",
         "redirects": "1",
-        "piprop": "thumbnail",
+        "piprop": "thumbnail|original",
         "pilimit": "max",
         "rvprop": "content"
       };

@@ -53,6 +53,8 @@ abstract class PokemonDetailPage
   String get title;
 
   PokemonDetailImage get thumbnail;
+
+  PokemonDetailImage get original;
 }
 
 abstract class PokemonDetailImage

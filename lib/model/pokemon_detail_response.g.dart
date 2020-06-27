@@ -138,6 +138,9 @@ class _$PokemonDetailPageSerializer
       'thumbnail',
       serializers.serialize(object.thumbnail,
           specifiedType: const FullType(PokemonDetailImage)),
+      'original',
+      serializers.serialize(object.original,
+          specifiedType: const FullType(PokemonDetailImage)),
     ];
 
     return result;
@@ -169,6 +172,11 @@ class _$PokemonDetailPageSerializer
           break;
         case 'thumbnail':
           result.thumbnail.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(PokemonDetailImage))
+              as PokemonDetailImage);
+          break;
+        case 'original':
+          result.original.replace(serializers.deserialize(value,
                   specifiedType: const FullType(PokemonDetailImage))
               as PokemonDetailImage);
           break;
@@ -450,12 +458,15 @@ class _$PokemonDetailPage extends PokemonDetailPage {
   final String title;
   @override
   final PokemonDetailImage thumbnail;
+  @override
+  final PokemonDetailImage original;
 
   factory _$PokemonDetailPage(
           [void Function(PokemonDetailPageBuilder) updates]) =>
       (new PokemonDetailPageBuilder()..update(updates)).build();
 
-  _$PokemonDetailPage._({this.pageid, this.ns, this.title, this.thumbnail})
+  _$PokemonDetailPage._(
+      {this.pageid, this.ns, this.title, this.thumbnail, this.original})
       : super._() {
     if (pageid == null) {
       throw new BuiltValueNullFieldError('PokemonDetailPage', 'pageid');
@@ -468,6 +479,9 @@ class _$PokemonDetailPage extends PokemonDetailPage {
     }
     if (thumbnail == null) {
       throw new BuiltValueNullFieldError('PokemonDetailPage', 'thumbnail');
+    }
+    if (original == null) {
+      throw new BuiltValueNullFieldError('PokemonDetailPage', 'original');
     }
   }
 
@@ -486,14 +500,16 @@ class _$PokemonDetailPage extends PokemonDetailPage {
         pageid == other.pageid &&
         ns == other.ns &&
         title == other.title &&
-        thumbnail == other.thumbnail;
+        thumbnail == other.thumbnail &&
+        original == other.original;
   }
 
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc($jc(0, pageid.hashCode), ns.hashCode), title.hashCode),
-        thumbnail.hashCode));
+        $jc($jc($jc($jc(0, pageid.hashCode), ns.hashCode), title.hashCode),
+            thumbnail.hashCode),
+        original.hashCode));
   }
 
   @override
@@ -502,7 +518,8 @@ class _$PokemonDetailPage extends PokemonDetailPage {
           ..add('pageid', pageid)
           ..add('ns', ns)
           ..add('title', title)
-          ..add('thumbnail', thumbnail))
+          ..add('thumbnail', thumbnail)
+          ..add('original', original))
         .toString();
   }
 }
@@ -529,6 +546,12 @@ class PokemonDetailPageBuilder
   set thumbnail(PokemonDetailImageBuilder thumbnail) =>
       _$this._thumbnail = thumbnail;
 
+  PokemonDetailImageBuilder _original;
+  PokemonDetailImageBuilder get original =>
+      _$this._original ??= new PokemonDetailImageBuilder();
+  set original(PokemonDetailImageBuilder original) =>
+      _$this._original = original;
+
   PokemonDetailPageBuilder();
 
   PokemonDetailPageBuilder get _$this {
@@ -537,6 +560,7 @@ class PokemonDetailPageBuilder
       _ns = _$v.ns;
       _title = _$v.title;
       _thumbnail = _$v.thumbnail?.toBuilder();
+      _original = _$v.original?.toBuilder();
       _$v = null;
     }
     return this;
@@ -564,12 +588,15 @@ class PokemonDetailPageBuilder
               pageid: pageid,
               ns: ns,
               title: title,
-              thumbnail: thumbnail.build());
+              thumbnail: thumbnail.build(),
+              original: original.build());
     } catch (_) {
       String _$failedField;
       try {
         _$failedField = 'thumbnail';
         thumbnail.build();
+        _$failedField = 'original';
+        original.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'PokemonDetailPage', _$failedField, e.toString());
