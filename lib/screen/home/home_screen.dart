@@ -45,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           key: ValueKey(e.name),
                           child: CachedNetworkImage(
-                            imageUrl: e.imageUrl,
+                            imageUrl: e.thumbnail(),
                             fit: BoxFit.cover,
                             placeholder: (context, url) => Padding(
                                 padding: EdgeInsets.all(50),

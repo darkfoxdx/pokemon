@@ -26,6 +26,7 @@ class PokemonListRepo extends ChangeNotifier {
     var list;
     try {
       var jsonString = await Util.readFromFile('pokemon');
+      if (jsonString == null) return null;
       var json = jsonDecode(jsonString);
       list = deserializeListOf<Pokemon>(json);
     } on FormatException catch (_) {

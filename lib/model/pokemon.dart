@@ -30,6 +30,11 @@ abstract class Pokemon implements Built<Pokemon, PokemonBuilder>, Comparable {
   @nullable
   String get imageUrl;
 
+  String thumbnail([int size = 200]) {
+    // So far only know 50, 100, 150, 160, 200, 240
+    return imageUrl.replaceAll(RegExp(r'\d+px'), '${size}px');
+  }
+
   factory Pokemon.fromMatch(RegExpMatch match) {
     return _$Pokemon._(
       regionalDex: match.group(1),

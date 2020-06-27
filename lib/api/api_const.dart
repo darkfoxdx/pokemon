@@ -1,7 +1,7 @@
 class ApiConst {
   static const baseUrl = "https://bulbapedia.bulbagarden.net/w/api.php";
 
-  static getPokemonsQuery() =>
+  static getGalarOriPokemonsQuery() =>
       {
         "action": "parse",
         "format": "json",
@@ -16,7 +16,7 @@ class ApiConst {
         "prop": "pageimages|revisions",
         "titles": "${pokemons.join("|")}",
         "redirects": "1",
-        "piprop": "original",
+        "piprop": "thumbnail",
         "pilimit": "max",
         "rvprop": "content"
       };

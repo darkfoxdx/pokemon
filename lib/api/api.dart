@@ -15,13 +15,13 @@ class Api {
   }
 
   static Future<http.Response> getPokemon() async =>
-      http.get(ApiConst.baseUrl + convertToQuery(ApiConst.getPokemonsQuery()));
+      http.get(ApiConst.baseUrl + convertToQuery(ApiConst.getGalarOriPokemonsQuery()));
 
   static Future<BuiltList<Pokemon>> getPokemonDetails() async {
     try {
       var client = http.Client();
       var getPokemon = await client
-          .get(ApiConst.baseUrl + convertToQuery(ApiConst.getPokemonsQuery()));
+          .get(ApiConst.baseUrl + convertToQuery(ApiConst.getGalarOriPokemonsQuery()));
       print("getPokemon = ${getPokemon.request.url.toString()}");
       var result = getPokemon?.body;
 
@@ -41,7 +41,7 @@ class Api {
         pokemonDetailResponse.query.pages.values.forEach((detail) {
           var updated = pokemons.firstWhere((pokemon) =>
               detail.title.toLowerCase().contains(pokemon.name.toLowerCase()))
-              .rebuild((b) => b..imageUrl = detail.original.source);
+              .rebuild((b) => b..imageUrl = detail.thumbnail.source);
           mergedList.add(updated);
         });
       }
