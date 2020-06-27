@@ -6,7 +6,6 @@ import 'package:pokemon/util/parser.dart';
 
 part 'pokemon.g.dart';
 
-@BuiltValue(defaultCompare: false)
 abstract class Pokemon implements Built<Pokemon, PokemonBuilder>, Comparable {
   Pokemon._();
 
@@ -14,10 +13,8 @@ abstract class Pokemon implements Built<Pokemon, PokemonBuilder>, Comparable {
 
   static Serializer<Pokemon> get serializer => _$pokemonSerializer;
 
-  @BuiltValueField(compare: true)
   String get regionalDex;
 
-  @BuiltValueField(compare: true)
   String get nationalDex;
 
   String get name;
@@ -30,9 +27,11 @@ abstract class Pokemon implements Built<Pokemon, PokemonBuilder>, Comparable {
   PokemonType get type2;
 
   @nullable
+  @BuiltValueField(compare: false)
   String get originalUrl;
 
   @nullable
+  @BuiltValueField(compare: false)
   String get thumbnailUrl;
 
   String thumbnail([int size = 120]) {

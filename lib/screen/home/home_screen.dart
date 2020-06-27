@@ -16,6 +16,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   String _stringFilter;
+  PokemonListRepo _repo;
 
   @override
   void initState() {
@@ -26,7 +27,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    Provider.of<PokemonListRepo>(context).getPokemons();
+    _repo = Provider.of<PokemonListRepo>(context);
+    _repo.getPokemons();
   }
 
   @override
@@ -41,38 +43,41 @@ class _HomeScreenState extends State<HomeScreen> {
               );
             }
             print(repo.pokemons.length);
-            return Column(
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: TextField(
-                    onChanged: (value) {
-                      setState(() {
-                        _stringFilter = value;
-                      });
-                    },
-                  ),
-                ),
-                Expanded(
-                  child: Scrollbar(
-                    child: GridView(
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 3),
-                      children: repo.pokemons
-                          .where((element) {
-                            if (_stringFilter == '') {
-                              return true;
-                            } else {
-                              return Algorithm.contains(
-                                  _stringFilter, element.name);
-                            }
-                          })
-                          .map((e) => PokemonCard(pokemon: e))
-                          .toList(),
+            return RefreshIndicator(
+              onRefresh: () => repo.refreshPokemons(),
+              child: Column(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: TextField(
+                      onChanged: (value) {
+                        setState(() {
+                          _stringFilter = value;
+                        });
+                      },
                     ),
                   ),
-                ),
-              ],
+                  Expanded(
+                    child: Scrollbar(
+                      child: GridView(
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3),
+                        children: repo.pokemons
+                            .where((element) {
+                              if (_stringFilter == '') {
+                                return true;
+                              } else {
+                                return Algorithm.contains(
+                                    _stringFilter, element.name);
+                              }
+                            })
+                            .map((e) => PokemonCard(pokemon: e))
+                            .toList(),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             );
           },
         ),

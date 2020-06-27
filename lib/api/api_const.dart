@@ -9,6 +9,14 @@ class ApiConst {
         "prop": "wikitext",
       };
 
+  static getGalarArmorPokemonsQuery() =>
+      {
+        "action": "parse",
+        "format": "json",
+        "page": "List_of_Pok%C3%A9mon_by_Isle_of_Armor_Pok%C3%A9dex_number",
+        "prop": "wikitext",
+      };
+
   static getPokemonDetailsQuery(Iterable<String> pokemons) =>
       {
         "action": "query",

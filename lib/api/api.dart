@@ -20,12 +20,17 @@ class Api {
   static Future<BuiltList<Pokemon>> getPokemonDetails() async {
     try {
       var client = http.Client();
-      var getPokemon = await client.get(ApiConst.baseUrl +
+      var getPokemonGalarOri = await client.get(ApiConst.baseUrl +
           convertToQuery(ApiConst.getGalarOriPokemonsQuery()));
-      print("getPokemon = ${getPokemon.request.url.toString()}");
-      var result = getPokemon?.body;
+      print("getPokemonGalarOri = ${getPokemonGalarOri.request.url.toString()}");
+      var pokemonsGalarOri = Parser.textToPokemonList(getPokemonGalarOri?.body);
 
-      var pokemons = Parser.textToPokemonList(result);
+      var getPokemonGalarArmor = await client.get(ApiConst.baseUrl +
+          convertToQuery(ApiConst.getGalarArmorPokemonsQuery()));
+      print("getPokemonGalarArmor = ${getPokemonGalarArmor.request.url.toString()}");
+      var pokemonsGalarArmor = Parser.textToPokemonList(getPokemonGalarArmor?.body);
+
+      var pokemons = pokemonsGalarOri + pokemonsGalarArmor;
       var pokemonsString = pokemons.map((e) => e.name).toList();
       var pokemonsStrings = Parser.splitPokemonStringListBy(pokemonsString, 50);
 

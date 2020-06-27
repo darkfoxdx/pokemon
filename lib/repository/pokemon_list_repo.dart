@@ -35,6 +35,13 @@ class PokemonListRepo extends ChangeNotifier {
     return list;
   }
 
+  Future<void> refreshPokemons() async {
+    var list = await Api.getPokemonDetails();
+    saveToFile(list);
+    _pokemon = list;
+    notifyListeners();
+  }
+
   void getPokemons() async {
     if (_isInit) {
       var list = await readFromFile();
