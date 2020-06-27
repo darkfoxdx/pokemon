@@ -17,7 +17,7 @@ class Api {
   static Future<http.Response> getPokemon() async =>
       http.get(ApiConst.baseUrl + convertToQuery(ApiConst.getPokemonsQuery()));
 
-  static Future<List<Pokemon>> getPokemonDetails() async {
+  static Future<BuiltList<Pokemon>> getPokemonDetails() async {
     try {
       var client = http.Client();
       var getPokemon = await client
@@ -45,7 +45,7 @@ class Api {
           mergedList.add(updated);
         });
       }
-      return mergedList..sort();
+      return BuiltList.of(mergedList..sort());
     } catch (error, stack) {
       print("$error\n$stack");
     }

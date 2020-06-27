@@ -1,24 +1,37 @@
-import 'package:flutter/cupertino.dart';
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
+import 'package:flutter/material.dart';
 
-enum PokemonType {
-  NORMAL,
-  FIRE,
-  FIGHTING,
-  WATER,
-  FLYING,
-  GRASS,
-  POISON,
-  ELECTRIC,
-  GROUND,
-  PSYCHIC,
-  ROCK,
-  ICE,
-  BUG,
-  DRAGON,
-  GHOST,
-  DARK,
-  STEEL,
-  FAIRY,
+part 'pokemon_type.g.dart';
+
+class PokemonType extends EnumClass {
+  static Serializer<PokemonType> get serializer => _$pokemonTypeSerializer;
+
+  static const PokemonType NORMAL = _$NORMAL;
+  static const PokemonType FIRE = _$FIRE;
+  static const PokemonType FIGHTING = _$FIGHTING;
+  static const PokemonType WATER = _$WATER;
+  static const PokemonType FLYING = _$FLYING;
+  static const PokemonType GRASS = _$GRASS;
+  static const PokemonType POISON = _$POISON;
+  static const PokemonType ELECTRIC = _$ELECTRIC;
+  static const PokemonType GROUND = _$GROUND;
+  static const PokemonType PSYCHIC = _$PSYCHIC;
+  static const PokemonType ROCK = _$ROCK;
+  static const PokemonType ICE = _$ICE;
+  static const PokemonType BUG = _$BUG;
+  static const PokemonType DRAGON = _$DRAGON;
+  static const PokemonType GHOST = _$GHOST;
+  static const PokemonType DARK = _$DARK;
+  static const PokemonType STEEL = _$STEEL;
+  static const PokemonType FAIRY = _$FAIRY;
+
+  const PokemonType._(String name) : super(name);
+
+  static BuiltSet<PokemonType> get values => _$values;
+
+  static PokemonType valueOf(String name) => _$valueOf(name);
 }
 
 extension PokemonTypeExtension on PokemonType {

@@ -7,10 +7,12 @@ part of 'serializers.dart';
 // **************************************************************************
 
 Serializers _$serializers = (new Serializers().toBuilder()
+      ..add(Pokemon.serializer)
       ..add(PokemonDetailImage.serializer)
       ..add(PokemonDetailPage.serializer)
       ..add(PokemonDetailQuery.serializer)
       ..add(PokemonDetailResponse.serializer)
+      ..add(PokemonType.serializer)
       ..addBuilderFactory(
           const FullType(BuiltMap, const [
             const FullType(String),

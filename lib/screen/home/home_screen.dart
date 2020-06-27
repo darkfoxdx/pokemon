@@ -22,9 +22,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Pokemon"),
-        ),
         body: Consumer<PokemonListRepo>(
           builder: (BuildContext context, PokemonListRepo repo, Widget child) {
             if (repo.pokemons.isEmpty) {

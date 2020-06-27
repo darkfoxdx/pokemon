@@ -6,6 +6,94 @@ part of 'pokemon.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
+Serializer<Pokemon> _$pokemonSerializer = new _$PokemonSerializer();
+
+class _$PokemonSerializer implements StructuredSerializer<Pokemon> {
+  @override
+  final Iterable<Type> types = const [Pokemon, _$Pokemon];
+  @override
+  final String wireName = 'Pokemon';
+
+  @override
+  Iterable<Object> serialize(Serializers serializers, Pokemon object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[
+      'regionalDex',
+      serializers.serialize(object.regionalDex,
+          specifiedType: const FullType(String)),
+      'nationalDex',
+      serializers.serialize(object.nationalDex,
+          specifiedType: const FullType(String)),
+      'name',
+      serializers.serialize(object.name, specifiedType: const FullType(String)),
+      'noOfTypes',
+      serializers.serialize(object.noOfTypes,
+          specifiedType: const FullType(int)),
+      'type1',
+      serializers.serialize(object.type1,
+          specifiedType: const FullType(PokemonType)),
+    ];
+    if (object.type2 != null) {
+      result
+        ..add('type2')
+        ..add(serializers.serialize(object.type2,
+            specifiedType: const FullType(PokemonType)));
+    }
+    if (object.imageUrl != null) {
+      result
+        ..add('imageUrl')
+        ..add(serializers.serialize(object.imageUrl,
+            specifiedType: const FullType(String)));
+    }
+    return result;
+  }
+
+  @override
+  Pokemon deserialize(Serializers serializers, Iterable<Object> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new PokemonBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'regionalDex':
+          result.regionalDex = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'nationalDex':
+          result.nationalDex = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'name':
+          result.name = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'noOfTypes':
+          result.noOfTypes = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'type1':
+          result.type1 = serializers.deserialize(value,
+              specifiedType: const FullType(PokemonType)) as PokemonType;
+          break;
+        case 'type2':
+          result.type2 = serializers.deserialize(value,
+              specifiedType: const FullType(PokemonType)) as PokemonType;
+          break;
+        case 'imageUrl':
+          result.imageUrl = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
 class _$Pokemon extends Pokemon {
   @override
   final String regionalDex;
