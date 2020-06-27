@@ -19,7 +19,7 @@ class PokemonListRepo extends ChangeNotifier {
 
   void saveToFile(BuiltList<Pokemon> list) async {
     var json = serializeListOf<Pokemon>(list);
-    Util.writeToFile('pokemon', json);
+    await Util.writeToFile('pokemon', json);
   }
 
   Future<BuiltList<Pokemon>> readFromFile() async {

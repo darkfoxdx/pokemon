@@ -164,31 +164,12 @@ class _$Pokemon extends Pokemon {
     if (identical(other, this)) return true;
     return other is Pokemon &&
         regionalDex == other.regionalDex &&
-        nationalDex == other.nationalDex &&
-        name == other.name &&
-        noOfTypes == other.noOfTypes &&
-        type1 == other.type1 &&
-        type2 == other.type2 &&
-        originalUrl == other.originalUrl &&
-        thumbnailUrl == other.thumbnailUrl;
+        nationalDex == other.nationalDex;
   }
 
   @override
   int get hashCode {
-    return $jf($jc(
-        $jc(
-            $jc(
-                $jc(
-                    $jc(
-                        $jc(
-                            $jc($jc(0, regionalDex.hashCode),
-                                nationalDex.hashCode),
-                            name.hashCode),
-                        noOfTypes.hashCode),
-                    type1.hashCode),
-                type2.hashCode),
-            originalUrl.hashCode),
-        thumbnailUrl.hashCode));
+    return $jf($jc($jc(0, regionalDex.hashCode), nationalDex.hashCode));
   }
 
   @override

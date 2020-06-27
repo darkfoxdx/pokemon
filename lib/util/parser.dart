@@ -8,7 +8,7 @@ class Parser {
 
   //{{rdex|011|825|Dottler|2|Bug|Psychic}}
   static RegExp pokemonPattern = RegExp(
-      r'\{\{rdex\|(\d+)\|(\d+)\|([\w\W]+?)\|(\d)\|(\w+)\|?(\w*)\}\}');
+      r'\{\{rdex\|(\d+)\|(\d+\w?)\|([\w\W]+?)\|(\d)\|(\w+)\|?(\w*)\}\}');
 
   static List<Pokemon> textToPokemonList(String text) {
     var find = pokemonPattern.allMatches(text);

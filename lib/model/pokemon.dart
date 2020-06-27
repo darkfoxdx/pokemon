@@ -6,6 +6,7 @@ import 'package:pokemon/util/parser.dart';
 
 part 'pokemon.g.dart';
 
+@BuiltValue(defaultCompare: false)
 abstract class Pokemon implements Built<Pokemon, PokemonBuilder>, Comparable {
   Pokemon._();
 
@@ -13,8 +14,10 @@ abstract class Pokemon implements Built<Pokemon, PokemonBuilder>, Comparable {
 
   static Serializer<Pokemon> get serializer => _$pokemonSerializer;
 
+  @BuiltValueField(compare: true)
   String get regionalDex;
 
+  @BuiltValueField(compare: true)
   String get nationalDex;
 
   String get name;
@@ -34,6 +37,7 @@ abstract class Pokemon implements Built<Pokemon, PokemonBuilder>, Comparable {
 
   String thumbnail([int size = 120]) {
     // So far only know 50, 100, 150, 160, 200, 240
+    if (thumbnailUrl == null) return '';
     return thumbnailUrl.replaceAll(RegExp(r'\d+px'), '${size}px');
   }
 

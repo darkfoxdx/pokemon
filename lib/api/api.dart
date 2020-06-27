@@ -29,7 +29,7 @@ class Api {
       var pokemonsString = pokemons.map((e) => e.name).toList();
       var pokemonsStrings = Parser.splitPokemonStringListBy(pokemonsString, 50);
 
-      List<Pokemon> mergedList = [];
+      List<PokemonDetailPage> pages = [];
       for (List<String> pokemonString in pokemonsStrings) {
         var getPokemonDetail = await client.get(ApiConst.baseUrl +
             convertToQuery(ApiConst.getPokemonDetailsQuery(pokemonString)));
@@ -37,19 +37,27 @@ class Api {
         final json = jsonDecode(getPokemonDetail.body);
         PokemonDetailResponse pokemonDetailResponse =
             serializers.deserializeWith(PokemonDetailResponse.serializer, json);
-
-        pokemonDetailResponse.query.pages.values.forEach((detail) {
-          var updated = pokemons
-              .firstWhere((pokemon) => detail.title
-                  .toLowerCase()
-                  .contains(pokemon.name.toLowerCase()))
-              .rebuild((b) => b
-                ..thumbnailUrl = detail.thumbnail.source
-                ..originalUrl = detail.original.source);
-          mergedList.add(updated);
-        });
+        pages.addAll(pokemonDetailResponse.query.pages.values);
       }
-      return BuiltList.of(mergedList..sort());
+
+      Set<Pokemon> mergedList = {};
+      pokemons.forEach((pokemon) {
+        var detail = pages.firstWhere(
+            (element) =>
+                element.title.contains(pokemon.name) &&
+                !pokemon.nationalDex.contains(RegExp(r'[A-Z]')),
+            orElse: () => null);
+
+        var updated = pokemon;
+        if (detail != null) {
+          updated = pokemon.rebuild((b) => b
+            ..thumbnailUrl = detail.thumbnail.source
+            ..originalUrl = detail.original.source);
+        }
+        mergedList.add(updated);
+      });
+
+      return BuiltList.of(mergedList);
     } catch (error, stack) {
       print("$error\n$stack");
     }

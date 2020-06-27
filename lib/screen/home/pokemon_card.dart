@@ -26,7 +26,13 @@ class PokemonCard extends StatelessWidget {
               padding: EdgeInsets.all(50),
               child: CircularProgressIndicator()),
           errorWidget: (context, url, error) =>
-              Icon(Icons.error),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Icon(Icons.error),
+                  Text(pokemon.name),
+                ],
+              ),
         ),
       ),
     );
