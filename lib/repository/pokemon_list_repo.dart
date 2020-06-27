@@ -30,7 +30,7 @@ class PokemonListRepo extends ChangeNotifier {
       var json = jsonDecode(jsonString);
       list = deserializeListOf<Pokemon>(json);
     } on FormatException catch (_) {
-      list = null;
+      return null;
     }
     return list;
   }
@@ -38,13 +38,13 @@ class PokemonListRepo extends ChangeNotifier {
   void getPokemons() async {
     if (_isInit) {
       var list = await readFromFile();
-      if (list == null) {
+      if (list == null || list.isEmpty) {
         list = await Api.getPokemonDetails();
         saveToFile(list);
       }
       _pokemon = list;
-      notifyListeners();
       _isInit = false;
+      notifyListeners();
     }
   }
 }

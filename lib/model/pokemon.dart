@@ -26,8 +26,10 @@ abstract class Pokemon implements Built<Pokemon, PokemonBuilder>, Comparable {
   @nullable
   PokemonType get type2;
 
+  @nullable
   String get originalUrl;
 
+  @nullable
   String get thumbnailUrl;
 
   String thumbnail([int size = 120]) {
