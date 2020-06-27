@@ -49,7 +49,7 @@ class Api {
       pokemons.forEach((pokemon) {
         var detail = pages.firstWhere(
             (element) =>
-                element.title.contains(pokemon.name) &&
+                element.title.replaceAll(RegExp(r'\s.+'), '') == pokemon.name &&
                 !pokemon.nationalDex.contains(RegExp(r'[A-Z]')),
             orElse: () => null);
 

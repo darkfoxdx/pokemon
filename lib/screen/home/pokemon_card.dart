@@ -30,7 +30,7 @@ class PokemonCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   Icon(Icons.error),
-                  Text(pokemon.name),
+                  Text('${pokemon.nationalDex} ${pokemon.name}'),
                 ],
               ),
         ),
