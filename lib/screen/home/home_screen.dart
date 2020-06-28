@@ -16,7 +16,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   String _stringFilter;
-  PokemonListRepo _repo;
 
   @override
   void initState() {
@@ -27,8 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _repo = Provider.of<PokemonListRepo>(context);
-    _repo.getPokemons();
+    Provider.of<PokemonListRepo>(context).getPokemons();
   }
 
   @override
