@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:built_collection/built_collection.dart';
+import 'package:html_unescape/html_unescape.dart';
 import 'package:http/http.dart' as http;
 import 'package:pokemon/api/api_const.dart';
 import 'package:pokemon/model/pokemon.dart';
@@ -22,13 +23,16 @@ class Api {
       var client = http.Client();
       var getPokemonGalarOri = await client.get(ApiConst.baseUrl +
           convertToQuery(ApiConst.getGalarOriPokemonsQuery()));
-      print("getPokemonGalarOri = ${getPokemonGalarOri.request.url.toString()}");
+      print(
+          "getPokemonGalarOri = ${getPokemonGalarOri.request.url.toString()}");
       var pokemonsGalarOri = Parser.textToPokemonList(getPokemonGalarOri?.body);
 
       var getPokemonGalarArmor = await client.get(ApiConst.baseUrl +
           convertToQuery(ApiConst.getGalarArmorPokemonsQuery()));
-      print("getPokemonGalarArmor = ${getPokemonGalarArmor.request.url.toString()}");
-      var pokemonsGalarArmor = Parser.textToPokemonList(getPokemonGalarArmor?.body);
+      print(
+          "getPokemonGalarArmor = ${getPokemonGalarArmor.request.url.toString()}");
+      var pokemonsGalarArmor =
+          Parser.textToPokemonList(getPokemonGalarArmor?.body);
 
       var pokemons = pokemonsGalarOri + pokemonsGalarArmor;
       var pokemonsString = pokemons.map((e) => e.name).toList();
@@ -47,11 +51,12 @@ class Api {
 
       Set<Pokemon> mergedList = {};
       pokemons.forEach((pokemon) {
-        var detail = pages.firstWhere(
-            (element) =>
-                element.title.replaceAll(RegExp(r'\s.+'), '') == pokemon.name &&
-                !pokemon.nationalDex.contains(RegExp(r'[A-Z]')),
-            orElse: () => null);
+        var detail = pages.firstWhere((element) {
+          var parsedName = HtmlUnescape().convert(
+              element.title.replaceAll(RegExp(r'\s(?:.(?!\s))+$'), ''));
+          return parsedName == pokemon.name &&
+              !pokemon.nationalDex.contains(RegExp(r'[A-Z]'));
+        }, orElse: () => null);
 
         var updated = pokemon;
         if (detail != null) {
