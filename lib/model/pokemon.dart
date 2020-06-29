@@ -34,6 +34,76 @@ abstract class Pokemon implements Built<Pokemon, PokemonBuilder>, Comparable {
   @BuiltValueField(compare: false)
   String get thumbnailUrl;
 
+  String get nationalDexNumber => nationalDex.replaceAll(RegExp(r'[A-Z]'), '');
+
+  String get formLetter => nationalDex.replaceAll(RegExp(r'[0-9]'), '');
+
+  String get append {
+    var append = '';
+    if (nationalDexNumber == '479') {
+      switch (formLetter) {
+        case 'O':
+          append = '-Heat';
+          break;
+        case 'W':
+          append = '-Wash';
+          break;
+        case 'R':
+          append = '-Frost';
+          break;
+        case 'F':
+          append = '-Fan';
+          break;
+        case 'L':
+          append = '-Mow';
+          break;
+      }
+    } else {
+      switch (formLetter) {
+        case 'A':
+          append = '-Alola';
+          break;
+        case 'G':
+          append = '-Galar';
+          break;
+        case 'F':
+          append = '-Female';
+          break;
+        case 'E':
+          append = '-East';
+          break;
+        case 'L':
+          append = '-Low Key';
+          break;
+        case 'B':
+          append = '-Blue';
+          break;
+        case 'GZ':
+          append = '-Galar-Zen';
+          break;
+        case 'Z':
+          append = '-Zen';
+          break;
+        case 'C':
+          append = '-Hero';
+          break;
+      }
+    }
+    return append;
+  }
+
+  String get imageWikiName {
+    return 'File:$nationalDexNumber$name$append.png';
+  }
+
+  String get wikiQuery {
+    if (append.isNotEmpty) {
+      return imageWikiName;
+    } else {
+      return name;
+    }
+  }
+
   String thumbnail([int size = 120]) {
     // So far only know 50, 100, 150, 160, 200, 240
     if (thumbnailUrl == null) return '';

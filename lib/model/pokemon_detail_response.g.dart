@@ -128,8 +128,6 @@ class _$PokemonDetailPageSerializer
   Iterable<Object> serialize(Serializers serializers, PokemonDetailPage object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
-      'pageid',
-      serializers.serialize(object.pageid, specifiedType: const FullType(int)),
       'ns',
       serializers.serialize(object.ns, specifiedType: const FullType(int)),
       'title',
@@ -142,7 +140,12 @@ class _$PokemonDetailPageSerializer
       serializers.serialize(object.original,
           specifiedType: const FullType(PokemonDetailImage)),
     ];
-
+    if (object.pageid != null) {
+      result
+        ..add('pageid')
+        ..add(serializers.serialize(object.pageid,
+            specifiedType: const FullType(int)));
+    }
     return result;
   }
 
@@ -468,9 +471,6 @@ class _$PokemonDetailPage extends PokemonDetailPage {
   _$PokemonDetailPage._(
       {this.pageid, this.ns, this.title, this.thumbnail, this.original})
       : super._() {
-    if (pageid == null) {
-      throw new BuiltValueNullFieldError('PokemonDetailPage', 'pageid');
-    }
     if (ns == null) {
       throw new BuiltValueNullFieldError('PokemonDetailPage', 'ns');
     }

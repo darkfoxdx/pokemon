@@ -35,7 +35,7 @@ class Api {
           Parser.textToPokemonList(getPokemonGalarArmor?.body);
 
       var pokemons = pokemonsGalarOri + pokemonsGalarArmor;
-      var pokemonsString = pokemons.map((e) => e.name).toList();
+      var pokemonsString = pokemons.map((e) => e.wikiQuery).toList();
       var pokemonsStrings = Parser.splitPokemonStringListBy(pokemonsString, 50);
 
       List<PokemonDetailPage> pages = [];
@@ -52,10 +52,10 @@ class Api {
       Set<Pokemon> mergedList = {};
       pokemons.forEach((pokemon) {
         var detail = pages.firstWhere((element) {
+          if (pokemon.imageWikiName == element.title) return true;
           var parsedName = HtmlUnescape().convert(
               element.title.replaceAll(RegExp(r'\s(?:.(?!\s))+$'), ''));
-          return parsedName == pokemon.name &&
-              !pokemon.nationalDex.contains(RegExp(r'[A-Z]'));
+          return parsedName == pokemon.name;
         }, orElse: () => null);
 
         var updated = pokemon;

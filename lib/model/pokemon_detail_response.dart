@@ -46,6 +46,7 @@ abstract class PokemonDetailPage
   static Serializer<PokemonDetailPage> get serializer =>
       _$pokemonDetailPageSerializer;
 
+  @nullable
   int get pageid;
 
   int get ns;
