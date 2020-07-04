@@ -1,6 +1,9 @@
 import 'package:pokemon/model/pokemon.dart';
 
 class Parser {
+
+  static RegExp captureAfterLastSpace = RegExp(r'\s(?:.(?!\s))+$');
+
   static T getEnumFromString<T>(Iterable<T> values, String value) {
     return values.firstWhere((type) => type.toString().split(".").last.toLowerCase() == value.toLowerCase(),
         orElse: () => null);

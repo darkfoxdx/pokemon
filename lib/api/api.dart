@@ -54,7 +54,7 @@ class Api {
       pokemons.forEach((pokemon) {
         var detail = pages.firstWhere((element) {
           var parsedName = HtmlUnescape().convert(
-              element.title.replaceAll(RegExp(r'\s(?:.(?!\s))+$'), ''));
+              element.title.replaceAll(' (Pokémon)', ''));
           return parsedName == pokemon.wikiQuery;
         }, orElse: () => null);
 
