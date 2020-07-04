@@ -4,8 +4,12 @@ import 'package:pokemon/model/pokemon.dart';
 
 class PokemonCard extends StatelessWidget {
   final Pokemon pokemon;
+  final bool debug;
+
   const PokemonCard({
-    Key key, this.pokemon,
+    Key key,
+    this.pokemon,
+    this.debug = false,
   }) : super(key: key);
 
   @override
@@ -18,20 +22,23 @@ class PokemonCard extends StatelessWidget {
           gradient: pokemon.generateGradient(),
           borderRadius: BorderRadius.circular(5.0),
         ),
-        child: CachedNetworkImage(
-          imageUrl: pokemon.thumbnail(),
-          fit: BoxFit.cover,
-          placeholder: (context, url) => Padding(
-              padding: EdgeInsets.all(50),
-              child: CircularProgressIndicator()),
-          errorWidget: (context, url, error) =>
-              Column(
+        child: Stack(
+          children: [
+            CachedNetworkImage(
+              imageUrl: pokemon.thumbnail(),
+              fit: BoxFit.cover,
+              placeholder: (context, url) => Padding(
+                  padding: EdgeInsets.all(50), child: CircularProgressIndicator()),
+              errorWidget: (context, url, error) => Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   Icon(Icons.error),
                   Text('${pokemon.nationalDex} ${pokemon.name}'),
                 ],
               ),
+            ),
+            Text('${pokemon.nationalDex}\n${pokemon.regionalDex}'),
+          ],
         ),
       ),
     );

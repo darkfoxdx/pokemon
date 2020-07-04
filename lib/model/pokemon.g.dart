@@ -162,25 +162,12 @@ class _$Pokemon extends Pokemon {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is Pokemon &&
-        regionalDex == other.regionalDex &&
-        nationalDex == other.nationalDex &&
-        name == other.name &&
-        noOfTypes == other.noOfTypes &&
-        type1 == other.type1 &&
-        type2 == other.type2;
+    return other is Pokemon && nationalDex == other.nationalDex;
   }
 
   @override
   int get hashCode {
-    return $jf($jc(
-        $jc(
-            $jc(
-                $jc($jc($jc(0, regionalDex.hashCode), nationalDex.hashCode),
-                    name.hashCode),
-                noOfTypes.hashCode),
-            type1.hashCode),
-        type2.hashCode));
+    return $jf($jc(0, nationalDex.hashCode));
   }
 
   @override

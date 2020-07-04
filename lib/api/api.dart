@@ -34,7 +34,7 @@ class Api {
       var pokemonsGalarArmor =
           Parser.textToPokemonList(getPokemonGalarArmor?.body);
 
-      var pokemons = pokemonsGalarOri + pokemonsGalarArmor;
+      var pokemons = (pokemonsGalarOri + pokemonsGalarArmor).toBuiltSet();
       var pokemonsString = pokemons.map((e) => e.wikiQuery).toList();
       var pokemonsStrings = Parser.splitPokemonStringListBy(pokemonsString, 50);
 
@@ -67,7 +67,7 @@ class Api {
         mergedList.add(updated);
       });
 
-      return BuiltList.of(mergedList);
+      return mergedList.toBuiltList();
     } catch (error, stack) {
       print("$error\n$stack");
     }

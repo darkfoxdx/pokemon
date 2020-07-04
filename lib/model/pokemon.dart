@@ -6,6 +6,7 @@ import 'package:pokemon/util/parser.dart';
 
 part 'pokemon.g.dart';
 
+@BuiltValue(defaultCompare: false)
 abstract class Pokemon implements Built<Pokemon, PokemonBuilder>, Comparable {
   Pokemon._();
 
@@ -15,6 +16,7 @@ abstract class Pokemon implements Built<Pokemon, PokemonBuilder>, Comparable {
 
   String get regionalDex;
 
+  @BuiltValueField(compare: true)
   String get nationalDex;
 
   String get name;
@@ -27,11 +29,9 @@ abstract class Pokemon implements Built<Pokemon, PokemonBuilder>, Comparable {
   PokemonType get type2;
 
   @nullable
-  @BuiltValueField(compare: false)
   String get originalUrl;
 
   @nullable
-  @BuiltValueField(compare: false)
   String get thumbnailUrl;
 
   String get nationalDexNumber => nationalDex.replaceAll(RegExp(r'[A-Z]'), '');
@@ -120,6 +120,17 @@ abstract class Pokemon implements Built<Pokemon, PokemonBuilder>, Comparable {
           PokemonType.values, match.group(5)),
       type2: Parser.getEnumFromString<PokemonType>(
           PokemonType.values, match.group(6)),
+    );
+  }
+
+  factory Pokemon.init({String regionalDex, String nationalDex}) {
+    return _$Pokemon._(
+      regionalDex: regionalDex,
+      nationalDex: nationalDex,
+      name: '',
+      noOfTypes: 0,
+      type1: PokemonType.GHOST,
+      type2: null,
     );
   }
 
