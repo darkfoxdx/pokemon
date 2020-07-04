@@ -6,6 +6,7 @@ import 'package:pokemon/api/api_const.dart';
 import 'package:pokemon/model/pokemon.dart';
 import 'package:pokemon/repository/pokemon_list_repo.dart';
 import 'package:pokemon/screen/home/pokemon_card.dart';
+import 'package:pokemon/screen/home/pokemon_grid.dart';
 import 'package:pokemon/util/algorithm.dart';
 import 'package:provider/provider.dart';
 
@@ -41,13 +42,10 @@ class _HomeScreenState extends State<HomeScreen> {
               );
             }
 
-            var filteredList = repo.pokemons.where((element) {
-              if (_stringFilter == '') {
-                return true;
-              } else {
-                return Algorithm.contains(_stringFilter, element.name);
-              }
-            }).toList();
+            var filteredList = repo.pokemons
+                .where((element) =>
+                    Algorithm.contains(_stringFilter, element.name))
+                .toList();
             print("${repo.pokemons.length} - ${filteredList.length}");
             return RefreshIndicator(
               onRefresh: () => repo.refreshPokemons(),
@@ -63,25 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                     ),
                   ),
-                  Expanded(
-                    child: Container(
-                      child: Scrollbar(
-                        child: GridView.builder(
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 3),
-                          itemCount: filteredList.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            var item = filteredList[index];
-                            return PokemonCard(
-                              key: ValueKey(item.nationalDexNumber),
-                              pokemon: item,
-                            );
-                          },
-                        ),
-                      ),
-                    ),
-                  ),
+                  PokemonGrid(filteredList: filteredList),
                 ],
               ),
             );
