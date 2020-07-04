@@ -52,13 +52,34 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 children: <Widget>[
                   Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: TextField(
-                      onChanged: (value) {
-                        setState(() {
-                          _stringFilter = value;
-                        });
-                      },
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: <Widget>[
+                        Expanded(
+                          child: TextField(
+                            onChanged: (value) {
+                              setState(() {
+                                _stringFilter = value;
+                              });
+                            },
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(left: 8.0),
+                          padding: EdgeInsets.all(5.0),
+                            decoration: BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10.0)),
+                              border: Border.fromBorderSide(BorderSide(
+                                  color:
+                                      Theme.of(context).unselectedWidgetColor)),
+                            ),
+                            child: IconButton(
+                              icon: Icon(Icons.filter_list),
+                              onPressed: () {},
+                            )),
+                      ],
                     ),
                   ),
                   PokemonGrid(filteredList: filteredList),
