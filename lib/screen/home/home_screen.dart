@@ -8,6 +8,7 @@ import 'package:pokemon/repository/pokemon_list_repo.dart';
 import 'package:pokemon/screen/home/pokemon_card.dart';
 import 'package:pokemon/screen/home/pokemon_grid.dart';
 import 'package:pokemon/util/algorithm.dart';
+import 'package:pokemon/util/theme.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -51,10 +52,11 @@ class _HomeScreenState extends State<HomeScreen> {
               onRefresh: () => repo.refreshPokemons(),
               child: Column(
                 children: <Widget>[
-                  Padding(
+                  Container(
+                    height: 80,
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
-                      mainAxisSize: MainAxisSize.max,
+                      mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
                         Expanded(
                           child: TextField(
@@ -66,18 +68,19 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         Container(
-                          margin: EdgeInsets.only(left: 8.0),
-                          padding: EdgeInsets.all(5.0),
-                            decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10.0)),
-                              border: Border.fromBorderSide(BorderSide(
-                                  color:
-                                      Theme.of(context).unselectedWidgetColor)),
-                            ),
-                            child: IconButton(
-                              icon: Icon(Icons.filter_list),
-                              onPressed: () {},
+                            padding: EdgeInsets.only(left: 8.0, bottom: 2.5, top: 2.5),
+                            child: AspectRatio(
+                              aspectRatio: 1.0,
+                              child: FlatButton(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(ThemeUtil.borderRadius)),
+                                    side: BorderSide(
+                                        color: Theme.of(context)
+                                            .unselectedWidgetColor)),
+                                child: Icon(Icons.filter_list),
+                                onPressed: () {},
+                              ),
                             )),
                       ],
                     ),
