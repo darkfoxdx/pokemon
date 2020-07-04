@@ -38,8 +38,9 @@ abstract class Pokemon implements Built<Pokemon, PokemonBuilder>, Comparable {
 
   String get formLetter => nationalDex.replaceAll(RegExp(r'[0-9]'), '');
 
+  @nullable
   String get append {
-    var append = '';
+    var append;
     if (nationalDexNumber == '479') {
       switch (formLetter) {
         case 'O':
@@ -85,7 +86,7 @@ abstract class Pokemon implements Built<Pokemon, PokemonBuilder>, Comparable {
           append = '-Zen';
           break;
         case 'C':
-          append = '-Hero';
+          append = '';
           break;
       }
     }
@@ -97,7 +98,7 @@ abstract class Pokemon implements Built<Pokemon, PokemonBuilder>, Comparable {
   }
 
   String get wikiQuery {
-    if (append.isNotEmpty) {
+    if (append != null) {
       return imageWikiName;
     } else {
       return name;

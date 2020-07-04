@@ -52,6 +52,9 @@ class Api {
 
       Set<Pokemon> mergedList = {};
       pokemons.forEach((pokemon) {
+        if (pokemon.nationalDex.contains('888')) {
+          print('log $pokemon');
+        }
         var detail = pages.firstWhere((element) {
           var parsedName = HtmlUnescape().convert(
               element.title.replaceAll(' (Pokémon)', ''));
