@@ -18,7 +18,6 @@ class PokemonCard extends StatelessWidget {
           gradient: pokemon.generateGradient(),
           borderRadius: BorderRadius.circular(5.0),
         ),
-        key: ValueKey(pokemon.name),
         child: CachedNetworkImage(
           imageUrl: pokemon.thumbnail(),
           fit: BoxFit.cover,

@@ -46,16 +46,16 @@ class Api {
         final json = jsonDecode(getPokemonDetail.body);
         PokemonDetailResponse pokemonDetailResponse =
             serializers.deserializeWith(PokemonDetailResponse.serializer, json);
-        pages.addAll(pokemonDetailResponse.query.pages.values);
+         var pageList = pokemonDetailResponse.query.pages.values;
+        pages.addAll(pageList);
       }
 
       Set<Pokemon> mergedList = {};
       pokemons.forEach((pokemon) {
         var detail = pages.firstWhere((element) {
-          if (pokemon.imageWikiName == element.title) return true;
           var parsedName = HtmlUnescape().convert(
               element.title.replaceAll(RegExp(r'\s(?:.(?!\s))+$'), ''));
-          return parsedName == pokemon.name;
+          return parsedName == pokemon.wikiQuery;
         }, orElse: () => null);
 
         var updated = pokemon;

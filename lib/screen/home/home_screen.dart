@@ -40,7 +40,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: CircularProgressIndicator(),
               );
             }
-            print(repo.pokemons.length);
+
+            var filteredList = repo.pokemons.where((element) {
+              if (_stringFilter == '') {
+                return true;
+              } else {
+                return Algorithm.contains(_stringFilter, element.name);
+              }
+            }).toList();
+            print("${repo.pokemons.length} - ${filteredList.length}");
             return RefreshIndicator(
               onRefresh: () => repo.refreshPokemons(),
               child: Column(
@@ -56,21 +64,21 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   Expanded(
-                    child: Scrollbar(
-                      child: GridView(
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3),
-                        children: repo.pokemons
-                            .where((element) {
-                              if (_stringFilter == '') {
-                                return true;
-                              } else {
-                                return Algorithm.contains(
-                                    _stringFilter, element.name);
-                              }
-                            })
-                            .map((e) => PokemonCard(pokemon: e))
-                            .toList(),
+                    child: Container(
+                      child: Scrollbar(
+                        child: GridView.builder(
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 3),
+                          itemCount: filteredList.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            var item = filteredList[index];
+                            return PokemonCard(
+                              key: ValueKey(item.nationalDexNumber),
+                              pokemon: item,
+                            );
+                          },
+                        ),
                       ),
                     ),
                   ),
