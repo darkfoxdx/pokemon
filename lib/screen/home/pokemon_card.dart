@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pokemon/model/pokemon.dart';
 
@@ -28,12 +29,14 @@ class PokemonCard extends StatelessWidget {
               imageUrl: pokemon.thumbnail(),
               fit: BoxFit.cover,
               placeholder: (context, url) => Padding(
-                  padding: EdgeInsets.all(50), child: CircularProgressIndicator()),
+                  padding: EdgeInsets.all(50),
+                  child: CircularProgressIndicator()),
               errorWidget: (context, url, error) => Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Icon(Icons.error),
-                  Text('${pokemon.nationalDex} ${pokemon.name}'),
+                  Center(child: Text('${pokemon.nationalDex} ${pokemon.name}')),
                 ],
               ),
             ),
