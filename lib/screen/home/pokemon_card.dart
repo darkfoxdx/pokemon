@@ -37,7 +37,10 @@ class PokemonCard extends StatelessWidget {
                 ],
               ),
             ),
-            Text('${pokemon.nationalDex}\n${pokemon.regionalDex}'),
+            if (debug)
+              Text('${pokemon.nationalDex}\n${pokemon.regionalDex}')
+            else
+              SizedBox.shrink(),
           ],
         ),
       ),
