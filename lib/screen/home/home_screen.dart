@@ -67,21 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             },
                           ),
                         ),
-                        Container(
-                            padding: EdgeInsets.only(left: 8.0, bottom: 2.5, top: 2.5),
-                            child: AspectRatio(
-                              aspectRatio: 1.0,
-                              child: FlatButton(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(ThemeUtil.borderRadius)),
-                                    side: BorderSide(
-                                        color: Theme.of(context)
-                                            .unselectedWidgetColor)),
-                                child: Icon(Icons.filter_list),
-                                onPressed: () {},
-                              ),
-                            )),
+                        FilterButton(),
                       ],
                     ),
                   ),
@@ -93,5 +79,30 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
+  }
+}
+
+class FilterButton extends StatelessWidget {
+  const FilterButton({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        padding: EdgeInsets.only(left: 8.0, bottom: 2.5, top: 2.5),
+        child: AspectRatio(
+          aspectRatio: 1.0,
+          child: FlatButton(
+            shape: RoundedRectangleBorder(
+                borderRadius:
+                    BorderRadius.all(Radius.circular(ThemeUtil.borderRadius)),
+                side: BorderSide(
+                    color: Theme.of(context)
+                        .unselectedWidgetColor)),
+            child: Icon(Icons.filter_list),
+            onPressed: () {},
+          ),
+        ));
   }
 }
