@@ -20,4 +20,23 @@ class FilterRepo extends ChangeNotifier {
     _filterName = newValue;
     notifyListeners();
   }
+
+  bool shouldFilterType(Pokemon pokemon) {
+    if (_filterType.isEmpty) return true;
+    return _filterType.contains(pokemon.type1) ||
+        _filterType.contains(pokemon.type2);
+  }
+
+  bool isFilterTypeSelected(PokemonType type) {
+    return _filterType.contains(type);
+  }
+
+  void updateFilterType(PokemonType type) {
+    if (_filterType.contains(type)) {
+      _filterType.remove(type);
+    } else {
+      _filterType.add(type);
+    }
+    notifyListeners();
+  }
 }

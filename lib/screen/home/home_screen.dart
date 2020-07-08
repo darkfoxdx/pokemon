@@ -40,7 +40,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
             var filteredList = repo.pokemons
                 .where((element) =>
-                    Algorithm.contains(filter.filterName, element.name))
+                    Algorithm.contains(filter.filterName, element.name) &&
+                    filter.shouldFilterType(element))
                 .toList();
             print("${repo.pokemons.length} - ${filteredList.length}");
             return RefreshIndicator(
@@ -84,37 +85,51 @@ class FilterDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(
       child: SafeArea(
-        child: GridView.builder(
-          padding: const EdgeInsets.all(8.0),
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            childAspectRatio: 5,
-            mainAxisSpacing: 8.0,
-            crossAxisSpacing: 8.0,
-          ),
-          itemCount: PokemonType.values.length,
-          itemBuilder: (BuildContext context, int index) {
-            var item = PokemonType.values.elementAt(index);
-            return Container(
-              decoration: BoxDecoration(
-                color: item.color,
+        child: Consumer<FilterRepo>(
+          builder: (BuildContext context, FilterRepo filter, Widget child) {
+            return GridView.builder(
+              padding: const EdgeInsets.all(8.0),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 5,
+                mainAxisSpacing: 8.0,
+                crossAxisSpacing: 8.0,
               ),
-              alignment: Alignment.center,
-              child: Text(
-                item.name,
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                  shadows: [
-                    Shadow(
-                      color: Colors.black,
-                      offset: Offset(0, 3),
-                      blurRadius: 3,
-                    )
-                  ],
-                ),
-              ),
+              itemCount: PokemonType.values.length,
+              itemBuilder: (BuildContext context, int index) {
+                var item = PokemonType.values.elementAt(index);
+                var offsetY = filter.isFilterTypeSelected(item) ? 0.0 : 4.0;
+                var borderWidth = filter.isFilterTypeSelected(item) ? 3.0 : 0.0;
+                return InkWell(
+                  onTap: () {
+                    filter.updateFilterType(item);
+                  },
+                  child: Ink(
+                    decoration: BoxDecoration(
+                      color: item.color,
+                      border: Border.all(width: borderWidth),
+                    ),
+                    child: Container(
+                      alignment: Alignment.center,
+                      child: Text(
+                        item.name,
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          shadows: [
+                            Shadow(
+                              color: Colors.black,
+                              offset: Offset(0, offsetY),
+                              blurRadius: 3,
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              },
             );
           },
         ),
