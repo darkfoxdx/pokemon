@@ -1,11 +1,7 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
-import 'package:pokemon/api/api.dart';
-import 'package:pokemon/api/api_const.dart';
-import 'package:pokemon/model/pokemon.dart';
+import 'package:pokemon/enums/pokemon_type.dart';
+import 'package:pokemon/repository/filter_repo.dart';
 import 'package:pokemon/repository/pokemon_list_repo.dart';
-import 'package:pokemon/screen/home/pokemon_card.dart';
 import 'package:pokemon/screen/home/pokemon_grid.dart';
 import 'package:pokemon/util/algorithm.dart';
 import 'package:pokemon/util/theme.dart';
@@ -17,12 +13,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  String _stringFilter;
-
   @override
   void initState() {
     super.initState();
-    _stringFilter = '';
   }
 
   @override
@@ -34,9 +27,11 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      endDrawer: FilterDrawer(),
       body: SafeArea(
-        child: Consumer<PokemonListRepo>(
-          builder: (BuildContext context, PokemonListRepo repo, Widget child) {
+        child: Consumer2<PokemonListRepo, FilterRepo>(
+          builder: (BuildContext context, PokemonListRepo repo,
+              FilterRepo filter, Widget child) {
             if (repo.pokemons.isEmpty) {
               return Center(
                 child: CircularProgressIndicator(),
@@ -45,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
             var filteredList = repo.pokemons
                 .where((element) =>
-                    Algorithm.contains(_stringFilter, element.name))
+                    Algorithm.contains(filter.filterName, element.name))
                 .toList();
             print("${repo.pokemons.length} - ${filteredList.length}");
             return RefreshIndicator(
@@ -61,9 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         Expanded(
                           child: TextField(
                             onChanged: (value) {
-                              setState(() {
-                                _stringFilter = value;
-                              });
+                              filter.updateFilterName(value);
                             },
                           ),
                         ),
@@ -73,6 +66,54 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   PokemonGrid(filteredList: filteredList),
                 ],
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
+
+class FilterDrawer extends StatelessWidget {
+  const FilterDrawer({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      child: SafeArea(
+        child: GridView.builder(
+          padding: const EdgeInsets.all(8.0),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            childAspectRatio: 5,
+            mainAxisSpacing: 8.0,
+            crossAxisSpacing: 8.0,
+          ),
+          itemCount: PokemonType.values.length,
+          itemBuilder: (BuildContext context, int index) {
+            var item = PokemonType.values.elementAt(index);
+            return Container(
+              decoration: BoxDecoration(
+                color: item.color,
+              ),
+              alignment: Alignment.center,
+              child: Text(
+                item.name,
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                  shadows: [
+                    Shadow(
+                      color: Colors.black,
+                      offset: Offset(0, 3),
+                      blurRadius: 3,
+                    )
+                  ],
+                ),
               ),
             );
           },
@@ -97,11 +138,12 @@ class FilterButton extends StatelessWidget {
             shape: RoundedRectangleBorder(
                 borderRadius:
                     BorderRadius.all(Radius.circular(ThemeUtil.borderRadius)),
-                side: BorderSide(
-                    color: Theme.of(context)
-                        .unselectedWidgetColor)),
+                side:
+                    BorderSide(color: Theme.of(context).unselectedWidgetColor)),
             child: Icon(Icons.filter_list),
-            onPressed: () {},
+            onPressed: () {
+              Scaffold.of(context).openEndDrawer();
+            },
           ),
         ));
   }
