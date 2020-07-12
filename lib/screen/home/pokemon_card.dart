@@ -10,7 +10,7 @@ class PokemonCard extends StatelessWidget {
   const PokemonCard({
     Key key,
     this.pokemon,
-    this.debug = true,
+    this.debug = false,
   }) : super(key: key);
 
   @override
