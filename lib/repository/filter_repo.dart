@@ -21,7 +21,11 @@ class FilterRepo extends ChangeNotifier {
       case SortType.NATIONAL:
         return a.nationalDex.compareTo(b.nationalDex);
       case SortType.TYPE_1:
-        return a.type1.toString().compareTo(b.type1.toString());
+        var firstSort = a.type1.toString().compareTo(b.type1.toString());
+        if (firstSort != 0) return firstSort;
+        if (a.type2 == null) return -1;
+        if (b.type2 == null) return 1;
+        return a.type2.toString().compareTo(b.type2.toString());
       case SortType.GAME:
       default:
         return a.gameDex.compareTo(b.gameDex);
