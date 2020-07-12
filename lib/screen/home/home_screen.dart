@@ -12,7 +12,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +30,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 .where((element) =>
                     Algorithm.contains(filter.filterName, element.name) &&
                     filter.shouldFilterType(element))
-                .toList();
+                .toList()
+                  ..sort((a, b) => filter.compare(a, b));
             print("${repo.pokemons.length} - ${filteredList.length}");
             return RefreshIndicator(
               onRefresh: () => repo.refreshPokemons(),

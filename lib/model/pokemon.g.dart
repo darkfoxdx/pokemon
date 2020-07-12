@@ -18,8 +18,8 @@ class _$PokemonSerializer implements StructuredSerializer<Pokemon> {
   Iterable<Object> serialize(Serializers serializers, Pokemon object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
-      'regions',
-      serializers.serialize(object.regions,
+      'games',
+      serializers.serialize(object.games,
           specifiedType:
               const FullType(BuiltList, const [const FullType(Game)])),
       'regionalDex',
@@ -69,8 +69,8 @@ class _$PokemonSerializer implements StructuredSerializer<Pokemon> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'regions':
-          result.regions.replace(serializers.deserialize(value,
+        case 'games':
+          result.games.replace(serializers.deserialize(value,
                   specifiedType:
                       const FullType(BuiltList, const [const FullType(Game)]))
               as BuiltList<Object>);
@@ -116,7 +116,7 @@ class _$PokemonSerializer implements StructuredSerializer<Pokemon> {
 
 class _$Pokemon extends Pokemon {
   @override
-  final BuiltList<Game> regions;
+  final BuiltList<Game> games;
   @override
   final String regionalDex;
   @override
@@ -138,7 +138,7 @@ class _$Pokemon extends Pokemon {
       (new PokemonBuilder()..update(updates)).build();
 
   _$Pokemon._(
-      {this.regions,
+      {this.games,
       this.regionalDex,
       this.nationalDex,
       this.name,
@@ -148,8 +148,8 @@ class _$Pokemon extends Pokemon {
       this.originalUrl,
       this.thumbnailUrl})
       : super._() {
-    if (regions == null) {
-      throw new BuiltValueNullFieldError('Pokemon', 'regions');
+    if (games == null) {
+      throw new BuiltValueNullFieldError('Pokemon', 'games');
     }
     if (regionalDex == null) {
       throw new BuiltValueNullFieldError('Pokemon', 'regionalDex');
@@ -189,7 +189,7 @@ class _$Pokemon extends Pokemon {
   @override
   String toString() {
     return (newBuiltValueToStringHelper('Pokemon')
-          ..add('regions', regions)
+          ..add('games', games)
           ..add('regionalDex', regionalDex)
           ..add('nationalDex', nationalDex)
           ..add('name', name)
@@ -205,9 +205,9 @@ class _$Pokemon extends Pokemon {
 class PokemonBuilder implements Builder<Pokemon, PokemonBuilder> {
   _$Pokemon _$v;
 
-  ListBuilder<Game> _regions;
-  ListBuilder<Game> get regions => _$this._regions ??= new ListBuilder<Game>();
-  set regions(ListBuilder<Game> regions) => _$this._regions = regions;
+  ListBuilder<Game> _games;
+  ListBuilder<Game> get games => _$this._games ??= new ListBuilder<Game>();
+  set games(ListBuilder<Game> games) => _$this._games = games;
 
   String _regionalDex;
   String get regionalDex => _$this._regionalDex;
@@ -245,7 +245,7 @@ class PokemonBuilder implements Builder<Pokemon, PokemonBuilder> {
 
   PokemonBuilder get _$this {
     if (_$v != null) {
-      _regions = _$v.regions?.toBuilder();
+      _games = _$v.games?.toBuilder();
       _regionalDex = _$v.regionalDex;
       _nationalDex = _$v.nationalDex;
       _name = _$v.name;
@@ -278,7 +278,7 @@ class PokemonBuilder implements Builder<Pokemon, PokemonBuilder> {
     try {
       _$result = _$v ??
           new _$Pokemon._(
-              regions: regions.build(),
+              games: games.build(),
               regionalDex: regionalDex,
               nationalDex: nationalDex,
               name: name,
@@ -290,8 +290,8 @@ class PokemonBuilder implements Builder<Pokemon, PokemonBuilder> {
     } catch (_) {
       String _$failedField;
       try {
-        _$failedField = 'regions';
-        regions.build();
+        _$failedField = 'games';
+        games.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'Pokemon', _$failedField, e.toString());

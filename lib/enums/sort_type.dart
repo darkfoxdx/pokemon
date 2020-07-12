@@ -8,7 +8,7 @@ part 'sort_type.g.dart';
 class SortType extends EnumClass {
   static Serializer<SortType> get serializer => _$sortTypeSerializer;
 
-  static const SortType REGIONAL = _$REGIONAL;
+  static const SortType GAME = _$GAME;
   static const SortType NATIONAL = _$NATIONAL;
   static const SortType TYPE_1 = _$TYPE_1;
 

@@ -10,7 +10,7 @@ class PokemonCard extends StatelessWidget {
   const PokemonCard({
     Key key,
     this.pokemon,
-    this.debug = false,
+    this.debug = true,
   }) : super(key: key);
 
   @override
@@ -41,7 +41,7 @@ class PokemonCard extends StatelessWidget {
               ),
             ),
             if (debug)
-              Text('${pokemon.nationalDex}\n${pokemon.regionalDex}')
+              Text('${pokemon.nationalDex}\n${pokemon.regionalDex}\n${pokemon.gameDex}')
             else
               SizedBox.shrink(),
           ],

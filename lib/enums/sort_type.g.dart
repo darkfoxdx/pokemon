@@ -6,14 +6,14 @@ part of 'sort_type.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-const SortType _$REGIONAL = const SortType._('REGIONAL');
+const SortType _$GAME = const SortType._('GAME');
 const SortType _$NATIONAL = const SortType._('NATIONAL');
 const SortType _$TYPE_1 = const SortType._('TYPE_1');
 
 SortType _$valueOf(String name) {
   switch (name) {
-    case 'REGIONAL':
-      return _$REGIONAL;
+    case 'GAME':
+      return _$GAME;
     case 'NATIONAL':
       return _$NATIONAL;
     case 'TYPE_1':
@@ -24,7 +24,7 @@ SortType _$valueOf(String name) {
 }
 
 final BuiltSet<SortType> _$values = new BuiltSet<SortType>(const <SortType>[
-  _$REGIONAL,
+  _$GAME,
   _$NATIONAL,
   _$TYPE_1,
 ]);

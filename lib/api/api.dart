@@ -45,7 +45,7 @@ class Api {
         var index = pokemonsGalarArmor.indexWhere((pokemonInArmor) => element == pokemonInArmor);
         var newPokemon = element;
         if (index != -1) {
-          newPokemon = element.rebuild((b) => b..regions.addAll(pokemonsGalarArmor[index].regions));
+          newPokemon = element.rebuild((b) => b..games.addAll(pokemonsGalarArmor[index].games));
           pokemonsGalarArmor.removeAt(index);
         }
         pokemons.add(newPokemon);

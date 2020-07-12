@@ -16,7 +16,7 @@ abstract class Pokemon implements Built<Pokemon, PokemonBuilder>, Comparable {
 
   static Serializer<Pokemon> get serializer => _$pokemonSerializer;
 
-  BuiltList<Game> get regions;
+  BuiltList<Game> get games;
 
   String get regionalDex;
 
@@ -42,6 +42,16 @@ abstract class Pokemon implements Built<Pokemon, PokemonBuilder>, Comparable {
 
   String get formLetter => nationalDex.replaceAll(RegExp(r'[0-9]'), '');
 
+  String get gameDex {
+    String prefix;
+    if (games.contains(Game.SWSH_0)) {
+      prefix = Game.SWSH_0.toString();
+    } else {
+      prefix = Game.SWSH_1.toString();
+    }
+    return '$prefix\_$regionalDex';
+  }
+  
   @nullable
   String get append {
     var append;
@@ -117,7 +127,7 @@ abstract class Pokemon implements Built<Pokemon, PokemonBuilder>, Comparable {
 
   factory Pokemon.fromMatch(RegExpMatch match, Game region) {
     return _$Pokemon._(
-      regions: [region].toBuiltList(),
+      games: [region].toBuiltList(),
       regionalDex: match.group(1),
       nationalDex: match.group(2),
       name: match.group(3),
@@ -144,8 +154,8 @@ abstract class Pokemon implements Built<Pokemon, PokemonBuilder>, Comparable {
     return LinearGradient(
       colors: [type1.color, (type2 ?? type1).color],
       stops: [0.5, 0.5],
-      begin: Alignment.bottomRight,
-      end: Alignment.topLeft,
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
     );
   }
 
