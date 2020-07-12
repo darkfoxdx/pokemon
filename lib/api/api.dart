@@ -15,24 +15,29 @@ class Api {
         map.entries.map((entry) => "${entry.key}=${entry.value}").join("&");
   }
 
-  static Future<http.Response> getPokemon() async => http.get(
-      ApiConst.baseUrl + convertToQuery(ApiConst.getGalarOriPokemonsQuery()));
+  static Future<List<Pokemon>> getGalarOri() async {
+    var response = await http.get(
+        ApiConst.baseUrl + convertToQuery(ApiConst.getGalarOriPokemonsQuery()));
+    print(
+        "getPokemonGalarOri = ${response.request.url.toString()}");
+    var pokemonList = Parser.textToPokemonList(response?.body);
+    return pokemonList;
+  }
+
+  static Future<List<Pokemon>> getGalarArmor() async {
+    var response = await http.get(
+        ApiConst.baseUrl + convertToQuery(ApiConst.getGalarArmorPokemonsQuery()));
+    print(
+        "getPokemonGalarArmor = ${response.request.url.toString()}");
+    var pokemonList = Parser.textToPokemonList(response?.body);
+    return pokemonList;
+  }
 
   static Future<BuiltList<Pokemon>> getPokemonDetails() async {
     try {
       var client = http.Client();
-      var getPokemonGalarOri = await client.get(ApiConst.baseUrl +
-          convertToQuery(ApiConst.getGalarOriPokemonsQuery()));
-      print(
-          "getPokemonGalarOri = ${getPokemonGalarOri.request.url.toString()}");
-      var pokemonsGalarOri = Parser.textToPokemonList(getPokemonGalarOri?.body);
-
-      var getPokemonGalarArmor = await client.get(ApiConst.baseUrl +
-          convertToQuery(ApiConst.getGalarArmorPokemonsQuery()));
-      print(
-          "getPokemonGalarArmor = ${getPokemonGalarArmor.request.url.toString()}");
-      var pokemonsGalarArmor =
-          Parser.textToPokemonList(getPokemonGalarArmor?.body);
+      var pokemonsGalarOri = await getGalarOri();
+      var pokemonsGalarArmor = await getGalarArmor();
 
       var pokemons = (pokemonsGalarOri + pokemonsGalarArmor).toBuiltSet();
       var pokemonsString = pokemons.map((e) => e.wikiQuery).toList();
