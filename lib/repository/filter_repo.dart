@@ -6,11 +6,13 @@ import 'package:built_value/serializer.dart';
 import 'package:flutter/material.dart';
 import 'package:pokemon/api/api.dart';
 import 'package:pokemon/enums/pokemon_type.dart';
+import 'package:pokemon/enums/sort_type.dart';
 import 'package:pokemon/model/pokemon.dart';
 import 'package:pokemon/model/serializers.dart';
 import 'package:pokemon/util/util.dart';
 
 class FilterRepo extends ChangeNotifier {
+  SortType _sortType = SortType.REGIONAL;
   List<PokemonType> _filterType = List();
   String _filterName = '';
 
