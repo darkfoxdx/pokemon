@@ -13,6 +13,10 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(PokemonDetailQuery.serializer)
       ..add(PokemonDetailResponse.serializer)
       ..add(PokemonType.serializer)
+      ..add(Region.serializer)
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(Region)]),
+          () => new ListBuilder<Region>())
       ..addBuilderFactory(
           const FullType(BuiltMap, const [
             const FullType(String),

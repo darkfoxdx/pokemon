@@ -1,3 +1,4 @@
+import 'package:pokemon/enums/region.dart';
 import 'package:pokemon/model/pokemon.dart';
 
 class Parser {
@@ -13,9 +14,9 @@ class Parser {
   static RegExp pokemonPattern = RegExp(
       r'\{\{rdex\|(\d+)\|(\d+\w?)\|([\w\W]+?)\|(\d)\|(\w+)\|?(\w*)\}\}');
 
-  static List<Pokemon> textToPokemonList(String text) {
+  static List<Pokemon> textToPokemonList(String text, Region region) {
     var find = pokemonPattern.allMatches(text);
-    var pokemons = find.map((match) => Pokemon.fromMatch(match)).toList();
+    var pokemons = find.map((match) => Pokemon.fromMatch(match, region)).toList();
     return pokemons;
   }
 

@@ -4,6 +4,7 @@ import 'package:built_collection/built_collection.dart';
 import 'package:html_unescape/html_unescape.dart';
 import 'package:http/http.dart' as http;
 import 'package:pokemon/api/api_const.dart';
+import 'package:pokemon/enums/region.dart';
 import 'package:pokemon/model/pokemon.dart';
 import 'package:pokemon/model/serializers.dart';
 import 'package:pokemon/util/parser.dart';
@@ -20,7 +21,7 @@ class Api {
         ApiConst.baseUrl + convertToQuery(ApiConst.getGalarOriPokemonsQuery()));
     print(
         "getPokemonGalarOri = ${response.request.url.toString()}");
-    var pokemonList = Parser.textToPokemonList(response?.body);
+    var pokemonList = Parser.textToPokemonList(response?.body, Region.GALAR_0);
     return pokemonList;
   }
 
@@ -29,7 +30,7 @@ class Api {
         ApiConst.baseUrl + convertToQuery(ApiConst.getGalarArmorPokemonsQuery()));
     print(
         "getPokemonGalarArmor = ${response.request.url.toString()}");
-    var pokemonList = Parser.textToPokemonList(response?.body);
+    var pokemonList = Parser.textToPokemonList(response?.body, Region.GALAR_1);
     return pokemonList;
   }
 

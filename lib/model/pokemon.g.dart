@@ -18,6 +18,10 @@ class _$PokemonSerializer implements StructuredSerializer<Pokemon> {
   Iterable<Object> serialize(Serializers serializers, Pokemon object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
+      'regions',
+      serializers.serialize(object.regions,
+          specifiedType:
+              const FullType(BuiltList, const [const FullType(Region)])),
       'regionalDex',
       serializers.serialize(object.regionalDex,
           specifiedType: const FullType(String)),
@@ -65,6 +69,12 @@ class _$PokemonSerializer implements StructuredSerializer<Pokemon> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
+        case 'regions':
+          result.regions.replace(serializers.deserialize(value,
+                  specifiedType:
+                      const FullType(BuiltList, const [const FullType(Region)]))
+              as BuiltList<Object>);
+          break;
         case 'regionalDex':
           result.regionalDex = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -106,6 +116,8 @@ class _$PokemonSerializer implements StructuredSerializer<Pokemon> {
 
 class _$Pokemon extends Pokemon {
   @override
+  final BuiltList<Region> regions;
+  @override
   final String regionalDex;
   @override
   final String nationalDex;
@@ -126,7 +138,8 @@ class _$Pokemon extends Pokemon {
       (new PokemonBuilder()..update(updates)).build();
 
   _$Pokemon._(
-      {this.regionalDex,
+      {this.regions,
+      this.regionalDex,
       this.nationalDex,
       this.name,
       this.noOfTypes,
@@ -135,6 +148,9 @@ class _$Pokemon extends Pokemon {
       this.originalUrl,
       this.thumbnailUrl})
       : super._() {
+    if (regions == null) {
+      throw new BuiltValueNullFieldError('Pokemon', 'regions');
+    }
     if (regionalDex == null) {
       throw new BuiltValueNullFieldError('Pokemon', 'regionalDex');
     }
@@ -173,6 +189,7 @@ class _$Pokemon extends Pokemon {
   @override
   String toString() {
     return (newBuiltValueToStringHelper('Pokemon')
+          ..add('regions', regions)
           ..add('regionalDex', regionalDex)
           ..add('nationalDex', nationalDex)
           ..add('name', name)
@@ -187,6 +204,11 @@ class _$Pokemon extends Pokemon {
 
 class PokemonBuilder implements Builder<Pokemon, PokemonBuilder> {
   _$Pokemon _$v;
+
+  ListBuilder<Region> _regions;
+  ListBuilder<Region> get regions =>
+      _$this._regions ??= new ListBuilder<Region>();
+  set regions(ListBuilder<Region> regions) => _$this._regions = regions;
 
   String _regionalDex;
   String get regionalDex => _$this._regionalDex;
@@ -224,6 +246,7 @@ class PokemonBuilder implements Builder<Pokemon, PokemonBuilder> {
 
   PokemonBuilder get _$this {
     if (_$v != null) {
+      _regions = _$v.regions?.toBuilder();
       _regionalDex = _$v.regionalDex;
       _nationalDex = _$v.nationalDex;
       _name = _$v.name;
@@ -252,16 +275,30 @@ class PokemonBuilder implements Builder<Pokemon, PokemonBuilder> {
 
   @override
   _$Pokemon build() {
-    final _$result = _$v ??
-        new _$Pokemon._(
-            regionalDex: regionalDex,
-            nationalDex: nationalDex,
-            name: name,
-            noOfTypes: noOfTypes,
-            type1: type1,
-            type2: type2,
-            originalUrl: originalUrl,
-            thumbnailUrl: thumbnailUrl);
+    _$Pokemon _$result;
+    try {
+      _$result = _$v ??
+          new _$Pokemon._(
+              regions: regions.build(),
+              regionalDex: regionalDex,
+              nationalDex: nationalDex,
+              name: name,
+              noOfTypes: noOfTypes,
+              type1: type1,
+              type2: type2,
+              originalUrl: originalUrl,
+              thumbnailUrl: thumbnailUrl);
+    } catch (_) {
+      String _$failedField;
+      try {
+        _$failedField = 'regions';
+        regions.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'Pokemon', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }
