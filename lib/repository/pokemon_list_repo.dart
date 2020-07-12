@@ -13,9 +13,13 @@ class PokemonListRepo extends ChangeNotifier {
   BuiltList<Pokemon> _pokemon = BuiltList();
   var _isInit = true;
 
-  UnmodifiableListView<Pokemon> get pokemons => UnmodifiableListView(_pokemon);
+  BuiltList<Pokemon> get pokemons => _pokemon;
 
   final specifiedType = const FullType(BuiltList, [const FullType(Pokemon)]);
+
+  PokemonListRepo() {
+    getPokemons();
+  }
 
   void saveToFile(BuiltList<Pokemon> list) async {
     var json = serializeListOf<Pokemon>(list);
@@ -53,6 +57,7 @@ class PokemonListRepo extends ChangeNotifier {
       }
       _pokemon = list;
       _isInit = false;
+      print(_pokemon.length);
       notifyListeners();
     }
   }

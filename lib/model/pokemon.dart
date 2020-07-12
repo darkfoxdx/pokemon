@@ -4,7 +4,6 @@ import 'package:built_value/serializer.dart';
 import 'package:flutter/material.dart' show LinearGradient, Alignment;
 import 'package:pokemon/enums/game.dart';
 import 'package:pokemon/enums/pokemon_type.dart';
-import 'package:pokemon/enums/game.dart';
 import 'package:pokemon/util/parser.dart';
 
 part 'pokemon.g.dart';

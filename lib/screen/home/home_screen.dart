@@ -12,16 +12,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    Provider.of<PokemonListRepo>(context).getPokemons();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,14 +19,14 @@ class _HomeScreenState extends State<HomeScreen> {
       endDrawer: FilterDrawer(),
       body: SafeArea(
         child: Consumer2<PokemonListRepo, FilterRepo>(
+          child: Center(
+            child: CircularProgressIndicator(),
+          ),
           builder: (BuildContext context, PokemonListRepo repo,
               FilterRepo filter, Widget child) {
             if (repo.pokemons.isEmpty) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
+              return child;
             }
-
             var filteredList = repo.pokemons
                 .where((element) =>
                     Algorithm.contains(filter.filterName, element.name) &&
