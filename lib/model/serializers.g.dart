@@ -7,16 +7,16 @@ part of 'serializers.dart';
 // **************************************************************************
 
 Serializers _$serializers = (new Serializers().toBuilder()
+      ..add(Game.serializer)
       ..add(Pokemon.serializer)
       ..add(PokemonDetailImage.serializer)
       ..add(PokemonDetailPage.serializer)
       ..add(PokemonDetailQuery.serializer)
       ..add(PokemonDetailResponse.serializer)
       ..add(PokemonType.serializer)
-      ..add(Region.serializer)
       ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(Region)]),
-          () => new ListBuilder<Region>())
+          const FullType(BuiltList, const [const FullType(Game)]),
+          () => new ListBuilder<Game>())
       ..addBuilderFactory(
           const FullType(BuiltMap, const [
             const FullType(String),

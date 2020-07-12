@@ -4,7 +4,7 @@ import 'package:built_collection/built_collection.dart';
 import 'package:html_unescape/html_unescape.dart';
 import 'package:http/http.dart' as http;
 import 'package:pokemon/api/api_const.dart';
-import 'package:pokemon/enums/region.dart';
+import 'package:pokemon/enums/game.dart';
 import 'package:pokemon/model/pokemon.dart';
 import 'package:pokemon/model/serializers.dart';
 import 'package:pokemon/util/parser.dart';
@@ -21,7 +21,7 @@ class Api {
         ApiConst.baseUrl + convertToQuery(ApiConst.getGalarOriPokemonsQuery()));
     print(
         "getPokemonGalarOri = ${response.request.url.toString()}");
-    var pokemonList = Parser.textToPokemonList(response?.body, Region.GALAR_0);
+    var pokemonList = Parser.textToPokemonList(response?.body, Game.SWSH_0);
     return pokemonList;
   }
 
@@ -30,7 +30,7 @@ class Api {
         ApiConst.baseUrl + convertToQuery(ApiConst.getGalarArmorPokemonsQuery()));
     print(
         "getPokemonGalarArmor = ${response.request.url.toString()}");
-    var pokemonList = Parser.textToPokemonList(response?.body, Region.GALAR_1);
+    var pokemonList = Parser.textToPokemonList(response?.body, Game.SWSH_1);
     return pokemonList;
   }
 
@@ -40,7 +40,18 @@ class Api {
       var pokemonsGalarOri = await getGalarOri();
       var pokemonsGalarArmor = await getGalarArmor();
 
-      var pokemons = (pokemonsGalarOri + pokemonsGalarArmor).toBuiltSet();
+      List<Pokemon> pokemons = [];
+      pokemonsGalarOri.forEach((element) {
+        var index = pokemonsGalarArmor.indexWhere((pokemonInArmor) => element == pokemonInArmor);
+        var newPokemon = element;
+        if (index != -1) {
+          newPokemon = element.rebuild((b) => b..regions.addAll(pokemonsGalarArmor[index].regions));
+          pokemonsGalarArmor.removeAt(index);
+        }
+        pokemons.add(newPokemon);
+      });
+      pokemons.addAll(pokemonsGalarArmor);
+
       var pokemonsString = pokemons.map((e) => e.wikiQuery).toList();
       var pokemonsStrings = Parser.splitPokemonStringListBy(pokemonsString, 50);
 

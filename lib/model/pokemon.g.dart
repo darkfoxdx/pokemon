@@ -21,7 +21,7 @@ class _$PokemonSerializer implements StructuredSerializer<Pokemon> {
       'regions',
       serializers.serialize(object.regions,
           specifiedType:
-              const FullType(BuiltList, const [const FullType(Region)])),
+              const FullType(BuiltList, const [const FullType(Game)])),
       'regionalDex',
       serializers.serialize(object.regionalDex,
           specifiedType: const FullType(String)),
@@ -72,7 +72,7 @@ class _$PokemonSerializer implements StructuredSerializer<Pokemon> {
         case 'regions':
           result.regions.replace(serializers.deserialize(value,
                   specifiedType:
-                      const FullType(BuiltList, const [const FullType(Region)]))
+                      const FullType(BuiltList, const [const FullType(Game)]))
               as BuiltList<Object>);
           break;
         case 'regionalDex':
@@ -116,7 +116,7 @@ class _$PokemonSerializer implements StructuredSerializer<Pokemon> {
 
 class _$Pokemon extends Pokemon {
   @override
-  final BuiltList<Region> regions;
+  final BuiltList<Game> regions;
   @override
   final String regionalDex;
   @override
@@ -205,10 +205,9 @@ class _$Pokemon extends Pokemon {
 class PokemonBuilder implements Builder<Pokemon, PokemonBuilder> {
   _$Pokemon _$v;
 
-  ListBuilder<Region> _regions;
-  ListBuilder<Region> get regions =>
-      _$this._regions ??= new ListBuilder<Region>();
-  set regions(ListBuilder<Region> regions) => _$this._regions = regions;
+  ListBuilder<Game> _regions;
+  ListBuilder<Game> get regions => _$this._regions ??= new ListBuilder<Game>();
+  set regions(ListBuilder<Game> regions) => _$this._regions = regions;
 
   String _regionalDex;
   String get regionalDex => _$this._regionalDex;

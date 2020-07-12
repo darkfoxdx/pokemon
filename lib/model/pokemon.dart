@@ -2,8 +2,9 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:flutter/material.dart' show LinearGradient, Alignment;
+import 'package:pokemon/enums/game.dart';
 import 'package:pokemon/enums/pokemon_type.dart';
-import 'package:pokemon/enums/region.dart';
+import 'package:pokemon/enums/game.dart';
 import 'package:pokemon/util/parser.dart';
 
 part 'pokemon.g.dart';
@@ -16,7 +17,7 @@ abstract class Pokemon implements Built<Pokemon, PokemonBuilder>, Comparable {
 
   static Serializer<Pokemon> get serializer => _$pokemonSerializer;
 
-  BuiltList<Region> get regions;
+  BuiltList<Game> get regions;
 
   String get regionalDex;
 
@@ -115,7 +116,7 @@ abstract class Pokemon implements Built<Pokemon, PokemonBuilder>, Comparable {
     return thumbnailUrl.replaceAll(RegExp(r'\d+px'), '${size}px');
   }
 
-  factory Pokemon.fromMatch(RegExpMatch match, Region region) {
+  factory Pokemon.fromMatch(RegExpMatch match, Game region) {
     return _$Pokemon._(
       regions: [region].toBuiltList(),
       regionalDex: match.group(1),
