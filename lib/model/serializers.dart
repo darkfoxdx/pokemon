@@ -4,7 +4,6 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/json_object.dart';
 import 'package:pokemon/enums/game.dart';
 import 'package:pokemon/enums/pokemon_type.dart';
-import 'package:pokemon/enums/game.dart';
 import 'package:pokemon/model/pokemon_detail_response.dart';
 import 'package:pokemon/model/pokemon.dart';
 import 'package:built_value/serializer.dart';

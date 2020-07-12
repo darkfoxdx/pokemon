@@ -31,6 +31,8 @@ class PokemonListRepo extends ChangeNotifier {
       list = deserializeListOf<Pokemon>(json);
     } on FormatException catch (_) {
       return null;
+    } on DeserializationError catch (_) {
+      return null;
     }
     return list;
   }

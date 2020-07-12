@@ -69,7 +69,7 @@ class Api {
 
       Set<Pokemon> mergedList = {};
       pokemons.forEach((pokemon) {
-        if (pokemon.nationalDex.contains('888')) {
+        if (pokemon.nationalDex.contains('819')) {
           print('log $pokemon');
         }
         var detail = pages.firstWhere((element) {
