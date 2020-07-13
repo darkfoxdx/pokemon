@@ -70,20 +70,38 @@ class FilterRepo extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<Pokemon> specialSort(List<Pokemon> pokemons) {
-    List<Pokemon> oldList = List.of(pokemons);
+  List<Pokemon> specialSort2(List<Pokemon> pokemons) {
+    List<Pokemon> oldList =
+        pokemons.where((element) => element.type2 != null).toList();
+
+    Map<PokemonType, int> map = {};
+    for (final aPokemon in oldList) {
+      map[aPokemon.type1] =
+          map.containsKey(aPokemon.type1) ? map[aPokemon.type1] + 1 : 1;
+
+      map[aPokemon.type2 ?? aPokemon.type1] =
+          map.containsKey(aPokemon.type2 ?? aPokemon.type1)
+              ? map[aPokemon.type2 ?? aPokemon.type1] + 1
+              : 1;
+    }
+    oldList.sort((a, b) {
+      var totalA = map[a.type2 ?? a.type1];
+      var totalB = map[b.type2 ?? a.type1];
+      return totalA.compareTo(totalB);
+    });
+
     var current = oldList.first;
     List<Pokemon> newList = [current];
     oldList.remove(current);
 
-    List<Pokemon> rejects = [];
+    List<Pokemon> rejects =
+        pokemons.where((element) => element.type2 == null).toList();
     var tries = 0;
     while (oldList.isNotEmpty) {
       tries++;
-      for (Pokemon aPokemon in oldList) {
+      for (final aPokemon in oldList) {
         if ((current.type2 ?? current.type1) == aPokemon.type1) {
           tries = 0;
-          print('${current.name} vs ${aPokemon.name}');
           current = aPokemon;
           newList.add(current);
           break;
@@ -97,14 +115,11 @@ class FilterRepo extends ChangeNotifier {
       }
     }
 
-    print('Insert rejects');
-
     var currentRejectLength = rejects.length;
     var newRejectLength = 0;
     while (newRejectLength != currentRejectLength) {
-      for (Pokemon aPokemon in rejects) {
+      for (final aPokemon in rejects) {
         if ((aPokemon.type2 ?? aPokemon.type1) == newList.first.type1) {
-          print('check first pokemon');
           newList.insert(0, aPokemon);
           continue;
         }
@@ -113,7 +128,6 @@ class FilterRepo extends ChangeNotifier {
           var selected = newList[i];
           if ((previous.type2 ?? previous.type1) == aPokemon.type1 &&
               (aPokemon.type2 ?? aPokemon.type1) == selected.type1) {
-            print('${previous.name} vs ${aPokemon.name} vs ${selected.name}');
             newList.insert(i, aPokemon);
             break;
           }
@@ -124,7 +138,7 @@ class FilterRepo extends ChangeNotifier {
       newRejectLength = rejects.length;
     }
 
-    return newList + rejects;
+    return newList;
   }
 
   void bubbleSort(List<Pokemon> pokemons) {

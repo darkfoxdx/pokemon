@@ -35,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 .toList()
                   ..sort((a, b) => filter.compare(a, b));
             if (filter.sortType == SortType.SPECIAL) {
-              filteredList = filter.specialSort(filteredList);
+              filteredList = filter.specialSort2(filteredList);
             }
             print("${repo.pokemons.length} - ${filteredList.length}");
             return RefreshIndicator(
