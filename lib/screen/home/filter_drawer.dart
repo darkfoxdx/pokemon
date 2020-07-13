@@ -22,13 +22,7 @@ class FilterDrawer extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SortTypeWidget(filter: filter),
-                  SwitchListTile(
-                    title: Text('Show monotype only'),
-                    onChanged: (bool value) {
-                      filter.updateIsMonotype(value);
-                    },
-                    value: filter.isMonotType,
-                  ),
+                  FilterMonotypeWidget(filter: filter),
                   FilterTypeWidget(filter: filter),
                 ],
               ),
@@ -36,6 +30,25 @@ class FilterDrawer extends StatelessWidget {
           },
         ),
       ),
+    );
+  }
+}
+
+class FilterMonotypeWidget extends StatelessWidget {
+  final FilterRepo filter;
+
+  const FilterMonotypeWidget({
+    Key key, this.filter,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SwitchListTile(
+      title: Text('Show monotype only'),
+      onChanged: (bool value) {
+        filter.updateIsMonotype(value);
+      },
+      value: filter.isMonotType,
     );
   }
 }

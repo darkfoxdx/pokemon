@@ -9,6 +9,7 @@ part of 'sort_type.dart';
 const SortType _$GAME = const SortType._('GAME');
 const SortType _$NATIONAL = const SortType._('NATIONAL');
 const SortType _$TYPE_1 = const SortType._('TYPE_1');
+const SortType _$SPECIAL = const SortType._('SPECIAL');
 
 SortType _$valueOf(String name) {
   switch (name) {
@@ -18,6 +19,8 @@ SortType _$valueOf(String name) {
       return _$NATIONAL;
     case 'TYPE_1':
       return _$TYPE_1;
+    case 'SPECIAL':
+      return _$SPECIAL;
     default:
       throw new ArgumentError(name);
   }
@@ -27,6 +30,7 @@ final BuiltSet<SortType> _$values = new BuiltSet<SortType>(const <SortType>[
   _$GAME,
   _$NATIONAL,
   _$TYPE_1,
+  _$SPECIAL,
 ]);
 
 Serializer<SortType> _$sortTypeSerializer = new _$SortTypeSerializer();

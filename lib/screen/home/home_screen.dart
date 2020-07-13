@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pokemon/enums/sort_type.dart';
 import 'package:pokemon/repository/filter_repo.dart';
 import 'package:pokemon/repository/pokemon_list_repo.dart';
 import 'package:pokemon/screen/home/filter_drawer.dart';
@@ -33,6 +34,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     filter.shouldFilterMonotype(element))
                 .toList()
                   ..sort((a, b) => filter.compare(a, b));
+            if (filter.sortType == SortType.SPECIAL) {
+              filteredList = filter.specialSort(filteredList);
+            }
             print("${repo.pokemons.length} - ${filteredList.length}");
             return RefreshIndicator(
               onRefresh: () => repo.refreshPokemons(),
