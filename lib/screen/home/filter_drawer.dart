@@ -21,16 +21,15 @@ class FilterDrawer extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  DropdownButton<SortType>(
-                    isExpanded: true,
-                    value: filter.sortType,
-                    items: SortType.values
-                        .map((e) => DropdownMenuItem<SortType>(
-                            value: e, child: Text(e.name)))
-                        .toList(),
-                    onChanged: (value) => filter.updateSortType(value),
+                  SortTypeWidget(filter: filter),
+                  SwitchListTile(
+                    title: Text('Show monotype only'),
+                    onChanged: (bool value) {
+                      filter.updateIsMonotype(value);
+                    },
+                    value: filter.isMonotType,
                   ),
-                  FilterType(filter: filter),
+                  FilterTypeWidget(filter: filter),
                 ],
               ),
             );
@@ -41,10 +40,31 @@ class FilterDrawer extends StatelessWidget {
   }
 }
 
-class FilterType extends StatelessWidget {
+class SortTypeWidget extends StatelessWidget {
   final FilterRepo filter;
 
-  const FilterType({
+  const SortTypeWidget({
+    this.filter,
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return DropdownButton<SortType>(
+      isExpanded: true,
+      value: filter.sortType,
+      items: SortType.values
+          .map((e) => DropdownMenuItem<SortType>(value: e, child: Text(e.name)))
+          .toList(),
+      onChanged: (value) => filter.updateSortType(value),
+    );
+  }
+}
+
+class FilterTypeWidget extends StatelessWidget {
+  final FilterRepo filter;
+
+  const FilterTypeWidget({
     Key key,
     this.filter,
   }) : super(key: key);

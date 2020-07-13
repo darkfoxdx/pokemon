@@ -29,7 +29,8 @@ class _HomeScreenState extends State<HomeScreen> {
             var filteredList = repo.pokemons
                 .where((element) =>
                     Algorithm.contains(filter.filterName, element.name) &&
-                    filter.shouldFilterType(element))
+                    filter.shouldFilterType(element) &&
+                    filter.shouldFilterMonotype(element))
                 .toList()
                   ..sort((a, b) => filter.compare(a, b));
             print("${repo.pokemons.length} - ${filteredList.length}");

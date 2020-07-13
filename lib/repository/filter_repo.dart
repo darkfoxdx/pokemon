@@ -4,12 +4,14 @@ import 'package:pokemon/enums/sort_type.dart';
 import 'package:pokemon/model/pokemon.dart';
 
 class FilterRepo extends ChangeNotifier {
+  bool _isMonotype = false;
   SortType _sortType = SortType.GAME;
   List<PokemonType> _filterType = List();
   String _filterName = '';
 
   SortType get sortType => _sortType;
   String get filterName => _filterName;
+  bool get isMonotType => _isMonotype;
 
   void updateSortType(SortType newValue) {
     _sortType = newValue;
@@ -53,6 +55,16 @@ class FilterRepo extends ChangeNotifier {
     } else {
       _filterType.add(type);
     }
+    notifyListeners();
+  }
+
+  bool shouldFilterMonotype(Pokemon pokemon) {
+    if (!_isMonotype) return true;
+    return pokemon.type2 == null;
+  }
+
+  void updateIsMonotype(bool newValue) {
+    _isMonotype = newValue;
     notifyListeners();
   }
 }
