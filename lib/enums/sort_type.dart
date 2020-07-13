@@ -12,6 +12,7 @@ class SortType extends EnumClass {
   static const SortType NATIONAL = _$NATIONAL;
   static const SortType TYPE_1 = _$TYPE_1;
   static const SortType SPECIAL = _$SPECIAL;
+  static const SortType SHUFFLE = _$SHUFFLE;
 
   const SortType._(String name) : super(name);
 

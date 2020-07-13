@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:pokemon/enums/pokemon_type.dart';
 import 'package:pokemon/enums/sort_type.dart';
@@ -30,6 +32,8 @@ class FilterRepo extends ChangeNotifier {
         if (a.type2 == null) return -1;
         if (b.type2 == null) return 1;
         return a.type2.toString().compareTo(b.type2.toString());
+      case SortType.SHUFFLE:
+        return [-1, 0, 1][Random().nextInt(2)];
       case SortType.GAME:
       default:
         return a.gameDex.compareTo(b.gameDex);
@@ -138,7 +142,7 @@ class FilterRepo extends ChangeNotifier {
       newRejectLength = rejects.length;
     }
 
-    return newList;
+    return newList + rejects;
   }
 
   void bubbleSort(List<Pokemon> pokemons) {

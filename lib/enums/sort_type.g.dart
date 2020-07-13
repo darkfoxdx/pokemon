@@ -10,6 +10,7 @@ const SortType _$GAME = const SortType._('GAME');
 const SortType _$NATIONAL = const SortType._('NATIONAL');
 const SortType _$TYPE_1 = const SortType._('TYPE_1');
 const SortType _$SPECIAL = const SortType._('SPECIAL');
+const SortType _$SHUFFLE = const SortType._('SHUFFLE');
 
 SortType _$valueOf(String name) {
   switch (name) {
@@ -21,6 +22,8 @@ SortType _$valueOf(String name) {
       return _$TYPE_1;
     case 'SPECIAL':
       return _$SPECIAL;
+    case 'SHUFFLE':
+      return _$SHUFFLE;
     default:
       throw new ArgumentError(name);
   }
@@ -31,6 +34,7 @@ final BuiltSet<SortType> _$values = new BuiltSet<SortType>(const <SortType>[
   _$NATIONAL,
   _$TYPE_1,
   _$SPECIAL,
+  _$SHUFFLE,
 ]);
 
 Serializer<SortType> _$sortTypeSerializer = new _$SortTypeSerializer();
